@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="author" content="Marcel Suter">
+  <title>Nachprüfung</title>
+  <script src="./js/util.js"></script>
+  <script src="./js/examData.js"></script>
+  <script src="./js/eventData.js"></script>
+  <script src="./js/personData.js"></script>
+  <script src="./js/examlistCtrl.js" defer></script>
+  <link rel="stylesheet" href="./css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="./css/exam.css">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body class="d-flex flex-column h-100">
+<nav class="navbar navbar-expand-lg navbar-light">
+  <div class="container-lg">
+    <a class="navbar-brand" href="#">
+      <img src="./img/BZZ_Logo_Web.png" alt="" width="30" height="30"/>
+      BZZ Nachprüfungen
+    </a>
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#">Prüfungen</a>
+      </li>
+      <li>
+        <a class="nav-link" aria-current="page" href="./eventExams.html">Termin</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<main class="container-lg">
+  <div id="messages" role="alert"></div>
+  <div class="row">
+    <div id="list" class="table-responsive">
+      <form id="filterForm">
+        <table id="examlist" class="table table-striped">
+          <thead>
+          <tr>
+            <th scope="col">&nbsp;</th>
+            <th scope="col">Lernender</th>
+            <th scope="col">Termin</th>
+            <th scope="col">Lehrperson</th>
+            <th scope="col">Klasse</th>
+            <th scope="col">Fach / Prüfung</th>
+            <th scope="col">Dauer</th>
+            <th scope="col">Status</th>
+          </tr>
+          <tr id="searchForm">
+            <th>Suchen</th>
+            <th><input id="studentSearch" type="text"/></th>
+            <th>
+              <select id="dateSearch" type="text">
+                <option value="all">Alle</option>
+              </select>
+            </th>
+            <th><input id="teacherSearch" type="text"/></th>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+            <th>
+              <div id="statusSearch" class="form-check">
+                <input type="checkbox" class="form-check-input" id="open" checked/>
+                <label class="form-check-label" for="open">
+                  Offen
+                </label>
+                <br/>
+                <input type="checkbox" class="form-check-input" id="closed"/>
+                <label class="form-check-label" for="closed">
+                  Abgeschlossen
+                </label>
+              </div>
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          </tbody>
+          <tfoot>
+          <tr>
+            <td>
+              <button class="btn btn-primary" type="button" id="examadd" name="examadd">Neu</button>
+            </td>
+          </tr>
+          </tfoot>
+        </table>
+      </form>
+    </div>
+  </div>
+  <div id="examedit" class="py-3">
+    <form id="editform" class="d-none">
+      <fieldset class="row g-3 border">
+        <legend>Prüfung bearbeiten</legend>
+        <div class="col-lg-6 col-md-12">
+          <div class="">
+            <label for="student.fullname" class="form-label">Lernender</label>
+            <input type="text" required class="form-control" id="student.fullname" list="student.list"
+                   autocomplete="off"/>
+            <datalist id="student.list">
+              <option value="">
+            </datalist>
+          </div>
+          <div class="">
+            <label for="date" class="form-label">Nachprüfungstermin</label>
+            <select required class="form-select" id="event_uuid"></select>
+          </div>
+          <div class="">
+            <label for="room" class="form-label">Raum</label>
+            <input type="text" class="form-control" id="room"/>
+          </div>
+          <div class="">
+            <label for="cohort" class="form-label">Klasse</label>
+            <input type="text" required class="form-control" id="cohort"/>
+          </div>
+          <div class="">
+            <label for="teacher.fullname" class="form-label">Lehrperson</label>
+            <input type="text" required class="form-control" id="teacher.fullname"
+                   list="teacher.list" autocomplete="off"/>
+            <datalist id="teacher.list">
+              <option value="">
+            </datalist>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-12">
+          <div class="">
+            <label for="module" class="form-label">Fach/Modul</label>
+            <input type="text" required class="form-control" id="module"/>
+          </div>
+          <div class="">
+            <label for="exam_num" class="form-label">Prüfung</label>
+            <input type="text" class="form-control" id="exam_num"/>
+          </div>
+          <div class="">
+            <label for="missed" class="form-label">Prüfungsdatum</label>
+            <input type="date" required class="form-control" id="missed"/>
+          </div>
+          <div class="">
+            <label for="duration" class="form-label">Dauer</label>
+            <input type="number" required class="form-control" id="duration"/>
+          </div>
+          <div class="">
+            <label for="status" class="form-label">Status</label>
+            <select id="status" required class="form-select">
+              <option value="pendent">pendent</option>
+              <option value="offen">offen</option>
+              <option value="abgegeben">abgegeben</option>
+              <option value="erhalten">erhalten</option>
+              <option value="erledigt">erledigt</option>
+              <option value="pnab">pendent</option>
+              <option value="gelöscht">gelöscht</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <div class="">
+            <label for="tools" class="form-label">Hilfsmittel</label>
+            <input type="text" class="form-control" id="tools"/>
+          </div>
+          <div class="">
+            <label for="remarks" class="form-label">Bemerkungen (intern)</label>
+            <input type="text" class="form-control" id="remarks"/>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <div class="">
+            <button class="btn btn-primary" type="submit" id="saveexam" name="safeexam">Speichern</button>
+            <button class="btn btn-light" id="cancel" name="cancel" type="reset">Abbruch</button>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <div>
+            <input tabindex="-1" type="text" class="form-control" id="exam_uuid" readonly/>
+          </div>
+          <div class="">
+            <input tabindex="-1" type="text" class="form-control" id="teacher" readonly>
+          </div>
+          <div class="">
+            <input tabindex="-1" type="text" class="form-control" id="student" readonly/>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+
+</main>
+<footer class="bg-cyan text-center text-lg-start">
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    Exam v0.2r20220921 &copy; 2022 by Marcel Suter
+  </div>
+</footer>
+</body>
+</html>
