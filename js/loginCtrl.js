@@ -18,7 +18,7 @@ function sendLogin(event) {
             document.getElementById("password").value
         ).then(result => {
             if (result == "SUCCESS") {
-                window.location.href = "./examlist.html";
+                window.location.href = "../examList.html";
             } else {
                 showMessage("danger", "Login nicht erfolgreich");
             }

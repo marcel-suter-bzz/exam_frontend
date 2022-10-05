@@ -18,14 +18,18 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("editform").classList.add("d-none");
     if (role === "student") {
         document.getElementById("studentSearch").value = user;
+        document.getElementById("examadd").hidden = true;
         lockForm("editform", true);
+        lockForm("filterForm", true);
     } else {
         document.getElementById("teacherSearch").value = user;
         document.getElementById("studentSearch").addEventListener("keyup", searchExamlist);
         document.getElementById("teacherSearch").addEventListener("keyup", searchExamlist);
         document.getElementById("dateSearch").addEventListener("change", searchExamlist);
 
+        document.getElementById("examadd").hidden = true;
         lockForm("editform", false);
+        lockForm("filterForm", false);
         document.getElementById("editform").addEventListener("submit", submitExam);
         document.getElementById("student.fullname").addEventListener("keyup", searchPeople);
         document.getElementById("student.fullname").addEventListener("change", setPerson);

@@ -166,8 +166,37 @@ function saveExam(event) {
 
 }
 
+/**
+ * sends an email for all selected exams
+ * @param event
+ */
 function sendAllEmail(event) {
-
+showMessage("info", "Sende Emails ...")
+    let data = new URLSearchParams();
+    const boxes = document.querySelectorAll("input:checked");
+    if (boxes.length > 0) {
+        for (const box of boxes) {
+            data.append("exam_uuid", box.getAttribute("data-examuuid"));
+        }
+        fetch(API_URL + "/email", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Authorization": "Bearer " + readStorage("token")
+            }, body: data
+        }).then(function (response) {
+            if (!response.ok) {
+                console.log(response);
+            } else return response;
+        }).then(response => response.text()
+        ).then(pdf_name => {
+            showMessage("clear", "")
+        }).catch(function (error) {
+            console.log(error);
+        });
+    } else {
+        showMessage("warning", "keine Prüfung ausgewählt");
+    }
 }
 
 /**

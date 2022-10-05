@@ -8,7 +8,7 @@
   <script src="./js/examData.js"></script>
   <script src="./js/eventData.js"></script>
   <script src="./js/personData.js"></script>
-  <script src="./js/examlistCtrl.js" defer></script>
+  <script src="js/examListCtrl.js" defer></script>
   <link rel="stylesheet" href="./css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="./css/exam.css">
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
@@ -49,24 +49,26 @@
           </tr>
           <tr id="searchForm">
             <th>Suchen</th>
-            <th><input id="studentSearch" type="text"/></th>
+            <th><input id="studentSearch" class="form-control" type="text"/></th>
             <th>
-              <select id="dateSearch" type="text">
+              <select id="dateSearch" class="form-select" data-edit="all" type="text">
                 <option value="all">Alle</option>
               </select>
             </th>
-            <th><input id="teacherSearch" type="text"/></th>
+            <th>
+              <input id="teacherSearch" class="form-control" type="text" placeholder="Alle"/>
+            </th>
             <th>&nbsp;</th>
             <th>&nbsp;</th>
             <th>&nbsp;</th>
             <th>
               <div id="statusSearch" class="form-check">
-                <input type="checkbox" class="form-check-input" id="open" checked/>
+                <input type="checkbox" data-edit="all" class="form-check-input" id="open" checked/>
                 <label class="form-check-label" for="open">
                   Offen
                 </label>
                 <br/>
-                <input type="checkbox" class="form-check-input" id="closed"/>
+                <input type="checkbox" data-edit="all" class="form-check-input" id="closed"/>
                 <label class="form-check-label" for="closed">
                   Abgeschlossen
                 </label>
@@ -101,7 +103,7 @@
             </datalist>
           </div>
           <div class="">
-            <label for="date" class="form-label">Nachprüfungstermin</label>
+            <label for="event_uuid" class="form-label">Nachprüfungstermin</label>
             <select required class="form-select" id="event_uuid"></select>
           </div>
           <div class="">
@@ -169,13 +171,13 @@
         </div>
         <div class="col-lg-12">
           <div>
-            <input tabindex="-1" type="text" class="form-control" id="exam_uuid" readonly/>
+            <input tabindex="-1" type="hidden" class="form-control" id="exam_uuid" readonly/>
           </div>
           <div class="">
-            <input tabindex="-1" type="text" class="form-control" id="teacher" readonly>
+            <input tabindex="-1" type="hidden" class="form-control" id="teacher" readonly>
           </div>
           <div class="">
-            <input tabindex="-1" type="text" class="form-control" id="student" readonly/>
+            <input tabindex="-1" type="hidden" class="form-control" id="student" readonly/>
           </div>
         </div>
       </fieldset>
