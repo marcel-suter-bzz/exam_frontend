@@ -5,7 +5,7 @@
 /* initialize */
 let peopleDelay;
 let eventList = {};
-showMessage("info", "Lade Daten ...");
+showMessage("info", "Lade Daten ...", 1000);
 readEventList()
     .then(data => setEventList(data))
     .catch(result => {
@@ -27,10 +27,11 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("teacherSearch").addEventListener("keyup", searchExamlist);
         document.getElementById("dateSearch").addEventListener("change", searchExamlist);
 
-        document.getElementById("examadd").hidden = true;
+        document.getElementById("examadd").hidden = false;
         lockForm("editform", false);
         lockForm("filterForm", false);
         document.getElementById("editform").addEventListener("submit", submitExam);
+        document.getElementById("editform").addEventListener("reset", resetForm);
         document.getElementById("student.fullname").addEventListener("keyup", searchPeople);
         document.getElementById("student.fullname").addEventListener("change", setPerson);
         document.getElementById("teacher.fullname").addEventListener("keyup", searchPeople);
@@ -39,6 +40,8 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("examadd").addEventListener("click", function () {
             resetForm();
             document.getElementById("editform").classList.remove("d-none");
+            document.getElementById("list").classList.add("d-none");
+            searchExamlist();
         });
     }
 
@@ -107,7 +110,7 @@ function setPerson(event) {
 function searchExamlist() {
     clearTimeout(delayTimer);
     delayTimer = setTimeout(() => {
-        showMessage("info", "Lade Daten ...");
+        showMessage("info", "Lade Daten ...", 1000);
         let filter = "";
         filter += "student=" + document.getElementById("studentSearch").value;
         filter += "&teacher=" + document.getElementById("teacherSearch").value;
@@ -157,18 +160,19 @@ function showExamlist(data) {
                 button.type = "button";
                 button.id = "editExam";
                 button.title = "Bearbeiten";
-                button.className="btn btn-sm btn-outline-primary";
+                button.className = "btn btn-sm btn-outline-primary";
                 button.setAttribute("data-examuuid", exam.exam_uuid);
                 button.addEventListener("click", selectExam);
                 cell.appendChild(button);
 
                 if (role == "teacher") {
                     button = document.createElement("button");
-                    button.innerHTML = "<img src='./img/email.svg' width='20px'/>";;
+                    button.innerHTML = "<img src='./img/email.svg' width='20px'/>";
+                    ;
                     button.type = "button";
                     button.id = "sendEmail";
                     button.title = "Email";
-                    button.className="btn btn-sm btn-outline-primary";
+                    button.className = "btn btn-sm btn-outline-primary";
                     button.setAttribute("data-examuuid", exam.exam_uuid);
                     button.addEventListener("click", sendEmail);
                     cell.appendChild(button);
@@ -177,28 +181,26 @@ function showExamlist(data) {
                     button.type = "button";
                     button.id = "createPDF";
                     button.title = "Drucken";
-                    button.className="btn btn-sm btn-outline-primary";
+                    button.className = "btn btn-sm btn-outline-primary";
                     button.setAttribute("data-examuuid", exam.exam_uuid);
                     button.addEventListener("click", createPDF);
                     cell.appendChild(button);
                 }
 
                 cell = row.insertCell(-1);
-                cell.innerHTML = exam.student.firstname + " " + exam.student.lastname;
-                cell.innerHTML += "<br />" + exam.student.email;
-                cell = row.insertCell(-1);
-                cell.innerHTML = eventList[exam.event_uuid].datetime.substring(0,10);
-                cell = row.insertCell(-1);
                 cell.innerHTML = exam.teacher.firstname + " " + exam.teacher.lastname;
                 cell.innerHTML += "<br />" + exam.teacher.email;
                 cell = row.insertCell(-1);
-                cell.innerHTML = exam.cohort;
+                cell.innerHTML = exam.student.firstname + " " + exam.student.lastname;
+                cell.innerHTML += "<br />" + exam.student.email;
+                cell = row.insertCell(-1);
+                cell.innerHTML = eventList[exam.event_uuid].datetime.substring(0, 10);
+                cell = row.insertCell(-1);
+                cell.innerHTML = exam.status;
                 cell = row.insertCell(-1);
                 cell.innerHTML = exam.module + " / " + exam.exam_num;
                 cell = row.insertCell(-1);
                 cell.innerHTML = exam.duration;
-                cell = row.insertCell(-1);
-                cell.innerHTML = exam.status;
             } catch (error) {
                 console.log("Error in exam with uuid: " + exam.exam_uuid);
             }
@@ -228,7 +230,7 @@ function setEventList(data) {
 
             let option = document.createElement("option");
             option.value = event.event_uuid;
-            option.text = event.datetime.substring(0,10);
+            option.text = event.datetime.substring(0, 10);
             dateSearch.appendChild(option);
             let copy = option.cloneNode(true);
             dateEdit.appendChild(copy);
@@ -266,13 +268,14 @@ function sortExams(examA, examB) {
 function selectExam(event) {
     const uuid = getExamUUID(event)
     document.getElementById("editform").classList.remove("d-none");
+    document.getElementById("list").classList.add("d-none");
     readExam(
         uuid
     ).then(exam => {
         for (let property in exam) {
             if (typeof exam[property] === "object") {
                 if (property === "student" || property === "teacher") {
-                    document.getElementById(property + ".fullname").value = exam[property].fullname + " (" + exam[property].email + ")";
+                    document.getElementById(property + ".fullname").value = exam[property].fullname;
                     document.getElementById(property).value = exam[property].email;
                 }
             } else {
@@ -282,6 +285,7 @@ function selectExam(event) {
                 }
             }
         }
+        document.getElementById("teacher.fullname").focus();
     }).catch(status => {
         showMessage("danger", "Ein Fehler ist aufgetreten");
     });
@@ -319,7 +323,11 @@ function submitExam(event) {
         saveExam(
             data
         ).then(result => {
-
+            if (response.ok) {
+                document.getElementById("editform").classList.add("d-none");
+                document.getElementById("list").classList.remove("d-none");
+                searchExamlist();
+            }
         }).catch(result => {
 
         });
@@ -330,14 +338,9 @@ function submitExam(event) {
  * resets and closes the edit form
  */
 function resetForm() {
-    const form = document.getElementById("editform");
-    let elements = form.getElementsByTagName("input");
-    let count = elements.length;
-    for (let i = 0; i < count; i++) {
-        let element = elements[i];
-        element.value = "";
-    }
-    form.classList.add("d-none");
+    document.getElementById("editform").classList.add("d-none");
+    document.getElementById("list").classList.remove("d-none");
+    document.getElementById("examlist").focus();
 }
 
 

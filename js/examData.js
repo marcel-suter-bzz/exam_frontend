@@ -35,6 +35,7 @@ function saveExam(data) {
                 console.log(response);
                 reject(response.status);
             } else {
+                showMessage("info", "Daten gespeichert", 0, 2000);
                 resolve();
             }
         }).catch(function (error) {

@@ -15,7 +15,7 @@
 </head>
 <body class="d-flex flex-column h-100">
 <nav class="navbar navbar-expand-lg navbar-light">
-  <div class="container-lg">
+  <div class="container-xxl">
     <a class="navbar-brand" href="#">
       <img src="./img/BZZ_Logo_Web.png" alt="" width="30" height="30"/>
       BZZ Nachprüfungen
@@ -25,96 +25,71 @@
         <a class="nav-link active" aria-current="page" href="#">Prüfungen</a>
       </li>
       <li>
-        <a class="nav-link" aria-current="page" href="./eventExams.html">Termin</a>
+        <a class="nav-link" aria-current="page" href="./eventExams.html">Aufsicht</a>
       </li>
     </ul>
   </div>
 </nav>
-<main class="container-lg">
-  <div id="messages" role="alert"></div>
-  <div class="row">
-    <div id="list" class="table-responsive">
-      <form id="filterForm">
-        <table id="examlist" class="table table-striped">
-          <thead>
-          <tr>
-            <th scope="col">&nbsp;</th>
-            <th scope="col">Lernender</th>
-            <th scope="col">Termin</th>
-            <th scope="col">Lehrperson</th>
-            <th scope="col">Klasse</th>
-            <th scope="col">Fach / Prüfung</th>
-            <th scope="col">Dauer</th>
-            <th scope="col">Status</th>
-          </tr>
-          <tr id="searchForm">
-            <th>Suchen</th>
-            <th><input id="studentSearch" class="form-control" type="text"/></th>
-            <th>
-              <select id="dateSearch" class="form-select" data-edit="all" type="text">
-                <option value="all">Alle</option>
-              </select>
-            </th>
-            <th>
-              <input id="teacherSearch" class="form-control" type="text" placeholder="Alle"/>
-            </th>
-            <th>&nbsp;</th>
-            <th>&nbsp;</th>
-            <th>&nbsp;</th>
-            <th>
-              <div id="statusSearch" class="form-check">
-                <input type="checkbox" data-edit="all" class="form-check-input" id="open" checked/>
-                <label class="form-check-label" for="open">
-                  Offen
-                </label>
-                <br/>
-                <input type="checkbox" data-edit="all" class="form-check-input" id="closed"/>
-                <label class="form-check-label" for="closed">
-                  Abgeschlossen
-                </label>
-              </div>
-            </th>
-          </tr>
-          </thead>
-          <tbody>
-          </tbody>
-          <tfoot>
-          <tr>
-            <td>
-              <button class="btn btn-primary" type="button" id="examadd" name="examadd">Neu</button>
-            </td>
-          </tr>
-          </tfoot>
-        </table>
-      </form>
-    </div>
+<main class="container-xxl">
+  <div id="popup" class="container position-fixed ">
+    <div id="messages" class="alert" role="alert"></div>
   </div>
-  <div id="examedit" class="py-3">
+  <div id="list" class="col-12">
+    <form id="filterForm">
+      <table id="examlist" class="table table-striped table-fixed ">
+        <thead class="table-info">
+        <tr id="searchForm">
+          <th scope="col">
+            &nbsp;<br/>Suchen
+          </th>
+          <th scope="col">
+            Lehrperson<br/><input id="teacherSearch" class="form-control" type="text" placeholder="Alle"/>
+          </th>
+          <th scope="col">
+            Lernender<br/><input id="studentSearch" class="form-control" type="text"/>
+          </th>
+          <th scope="col">
+            Termin<br/>
+            <select id="dateSearch" class="form-select" data-edit="all" type="text">
+              <option value="all">Alle</option>
+            </select>
+          </th>
+          <th scope="col">
+            Status<br/>
+            <div id="statusSearch" class="form-check">
+              <input type="checkbox" data-edit="all" class="form-check-input" id="open" checked/>
+              <label class="form-check-label" for="open">
+                Offen
+              </label>
+              <br/>
+              <input type="checkbox" data-edit="all" class="form-check-input" id="closed"/>
+              <label class="form-check-label" for="closed">
+                Abgeschlossen
+              </label>
+            </div>
+          </th>
+          <th scope="col">
+            Fach / Prüfung
+          </th>
+          <th scope="col">
+            Dauer
+          </th>
+        </tr>
+        </thead>
+        <tbody id="listBody">
+        </tbody>
+      </table>
+      <div class="row col-1">
+         <button class="btn btn-primary" type="button" id="examadd" name="examadd">Neu</button>
+      </div>
+    </form>
+  </div>
+  <div id="examedit" class="container-xxl py-3">
     <form id="editform" class="d-none">
       <fieldset class="row g-3 border">
         <legend>Prüfungsdetails</legend>
-        <div class="col-lg-6 col-md-12">
-          <div class="">
-            <label for="student.fullname" class="form-label">Lernender</label>
-            <input type="text" required class="form-control" id="student.fullname" list="student.list"
-                   autocomplete="off"/>
-            <datalist id="student.list">
-              <option value="">
-            </datalist>
-          </div>
-          <div class="">
-            <label for="event_uuid" class="form-label">Nachprüfungstermin</label>
-            <select required class="form-select" id="event_uuid"></select>
-          </div>
-          <div class="">
-            <label for="room" class="form-label">Raum</label>
-            <input type="text" class="form-control" id="room"/>
-          </div>
-          <div class="">
-            <label for="cohort" class="form-label">Klasse</label>
-            <input type="text" required class="form-control" id="cohort"/>
-          </div>
-          <div class="">
+        <div class="row">
+          <div class="col-xl-4 col-lg-6 col-md-12">
             <label for="teacher.fullname" class="form-label">Lehrperson</label>
             <input type="text" required class="form-control" id="teacher.fullname"
                    list="teacher.list" autocomplete="off"/>
@@ -122,26 +97,50 @@
               <option value="">
             </datalist>
           </div>
+          <div class="col-xl-4 col-lg-6 col-md-12">
+            <label for="student.fullname" class="form-label">Lernender</label>
+            <input type="text" required class="form-control" id="student.fullname" list="student.list"
+                   autocomplete="off"/>
+            <datalist id="student.list">
+              <option value="">
+            </datalist>
+          </div>
+          <div class="col-xl-4 col-lg-6 col-md-12">
+            <label for="cohort" class="form-label">Klasse</label>
+            <input type="text" required class="form-control" id="cohort"/>
+          </div>
         </div>
-        <div class="col-lg-6 col-md-12">
-          <div class="">
+        <div class="row">
+          <div class="col-xl-4 col-lg-6 col-md-12">
             <label for="module" class="form-label">Fach/Modul</label>
             <input type="text" required class="form-control" id="module"/>
           </div>
-          <div class="">
+          <div class="col-xl-4 col-lg-6 col-md-12">
             <label for="exam_num" class="form-label">Prüfung</label>
             <input type="text" class="form-control" id="exam_num"/>
           </div>
-          <div class="">
-            <label for="missed" class="form-label">Prüfungsdatum</label>
+          <div class="col-xl-4 col-lg-6 col-md-12">
+            <label for="missed" class="form-label">
+              Prüfungsdatum
+              <i class="bi bi-question-circle-fill text-info" title="Datum der verpassten Prüfung"></i>
+            </label>
             <input type="date" required class="form-control" id="missed"/>
           </div>
-          <div class="">
+        </div>
+        <div class="row">
+          <div class="col-xl-4 col-lg-6 col-md-12">
+            <label for="event_uuid" class="form-label">Nachprüfungstermin</label>
+            <select required class="form-select" id="event_uuid"></select>
+          </div>
+          <div class="col-xl-4 col-lg-6 col-md-12">
             <label for="duration" class="form-label">Dauer</label>
             <input type="number" required class="form-control" id="duration"/>
           </div>
-          <div class="">
-            <label for="status" class="form-label">Status</label>
+          <div class="col-xl-4 col-lg-6 col-md-12">
+            <label for="status" class="form-label">
+              Status
+              <i class="bi bi-question-circle-fill text-info" title="Anklicken für Details"></i>
+            </label>
             <select id="status" required class="form-select">
               <option value="pendent">pendent</option>
               <option value="offen">offen</option>
@@ -152,20 +151,28 @@
               <option value="gelöscht">gelöscht</option>
             </select>
           </div>
+          <div class="col-xl-4 col-lg-6 col-md-12">
+            <label for="room" class="form-label">
+              Raum
+              <i class="bi bi-question-circle-fill text-info" title="Wird durch Aufsicht ausgefüllt"></i>
+            </label>
+            <span id="room" class="form-control" readonly>&nbsp;</span>
+          </div>
         </div>
-        <div class="col-lg-12">
+        <div class="col-12">
           <div class="">
             <label for="tools" class="form-label">Hilfsmittel</label>
             <input type="text" class="form-control" id="tools"/>
           </div>
           <div class="">
-            <label for="remarks" class="form-label">Bemerkungen (intern)</label>
+            <label for="remarks" class="form-label">Anmerkungen für Aufsicht</label>
             <input type="text" class="form-control" id="remarks"/>
           </div>
         </div>
         <div class="col-lg-12">
           <div class="">
             <button class="btn btn-primary" type="submit" id="saveexam" name="safeexam">Speichern</button>
+            <button class="btn btn-primary" type="submit" id="sendexam" name="sendexam">Speichern & Email</button>
             <button class="btn btn-light" id="cancel" name="cancel" type="reset">Abbruch</button>
           </div>
         </div>
@@ -185,9 +192,9 @@
   </div>
 
 </main>
-<footer class="bg-cyan text-center text-lg-start">
-  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-    Exam v0.2r20220921 &copy; 2022 by Marcel Suter
+<footer class="text-center text-lg-start">
+  <div class="container-xxl text-info text-center p-3">
+    Exam v0.3r20221011 &copy; 2022 by Marcel Suter
   </div>
 </footer>
 </body>

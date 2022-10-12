@@ -26,16 +26,18 @@
   </div>
 </nav>
 <main class="container-lg">
-  <div id="messages" role="alert"></div>
+  <div id="popup" class="container position-fixed ">
+    <div id="messages" class="alert" role="alert"></div>
+  </div>
   <form id="loginform">
-    <div class="mb-3">
+    <div class="mb-3 col-xs-12 col-3">
       <label for="email" class="form-label">Email</label>
-      <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+      <input type="email" class="form-control" id="email" size="40" aria-describedby="emailHelp">
       <div id="emailHelp" class="form-text"></div>
     </div>
-    <div class="mb-3">
+    <div class="mb-3 col-xs-12 col-3">
       <label for="password" class="form-label">Passwort</label>
-      <input type="password" class="form-control" id="password" aria-describedby="passwordHelp">
+      <input type="password" class="form-control" id="password" size="40" aria-describedby="passwordHelp">
       <div id="passwordHelp" class="form-text"></div>
     </div>
     <button id="login" type="submit">Anmelden</button>
@@ -47,9 +49,9 @@
     </ul>
   </div>
 </main>
-<footer class="bg-cyan text-center text-lg-start">
-  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-    Exam v0.2r20220921  &copy; 2022 by Marcel Suter
+<footer class="text-center text-lg-start">
+  <div class="container-xxl text-info text-center p-3">
+    Exam v0.3r20221011 &copy; 2022 by Marcel Suter
   </div>
 </footer>
 

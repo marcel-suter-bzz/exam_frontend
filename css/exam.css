@@ -1,22 +1,60 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css");
+
 html {
-  position: relative;
-  min-height: 100%;
-}
-body {
-  margin-bottom: 60px; /* Margin bottom by footer height */
-}
-footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 60px; /* Set the fixed height of the footer here */
-  line-height: 30px; /* Vertically center the text there */
+    position: relative;
+    min-height: 100%;
 }
 
-.bg-cyan {
-  background-color: var(--bs-cyan);
+body {
+    margin-bottom: 60px;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    line-height: 30px;
+}
+
+footer .text-center {
+    color: var(--bs-cyan);
+    border-top: var(--bs-blue) 2px solid;
+}
+
+#popup {
+    position: absolute;
+    min-height: 50px;
+    bottom: 50px;
+    pointer-events: none;
+    z-index: 99;
+    pointer-events: none;
+}
+
+#messages {
+    pointer-events: none;
+    z-index: 99;
 }
 
 .nav-item, .navbar-brand {
-  color: var(--bs-cyan) !important;
+    color: var(--bs-cyan) !important;
+}
+
+.form-label {
+    margin-top: 0.8rem;
+    margin-bottom: 0.2rem;
+}
+
+.table-fixed {
+    max-height: 600px;
+    display: block;
+    overflow: auto;
+}
+
+.table thead {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0px;
+    background: white;
+    inset-block-start: 0;
 }

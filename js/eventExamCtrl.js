@@ -27,22 +27,23 @@ document.addEventListener("DOMContentLoaded", () => {
  * search people with delay upon input
  */
 function searchExamlist() {
-    clearTimeout(delayTimer);
-    delayTimer = setTimeout(() => {
-        let filter = "&date=" + document.getElementById("dateSearch").value;
-        readExamlist(filter).then(data => {
-            showExamlist(data);
-        }).catch(result => {
+    const select = document.getElementById("dateSearch");
+    let filter = "&date=" + select.value;
+    const option = select.options[select.selectedIndex];
+    let locked = option.getAttribute("data-locked");
+    readExamlist(filter).then(data => {
+        showExamlist(data, locked==="true");
+    }).catch(result => {
 
-        });
-    }, 500);
+    });
 }
 
 /**
  * show the examlist in a table
  * @param data
+ * @param locked
  */
-function showExamlist(data) {
+function showExamlist(data, locked) {
     (async () => {
         let exists = false;
         while (!exists) {
@@ -54,6 +55,8 @@ function showExamlist(data) {
         let rows = document.getElementById("examlist")
             .getElementsByTagName("tbody")[0];
         rows.innerHTML = "";
+        let prevEmail = "";
+        let count = 0;
         data.forEach(exam => {
             try {
                 let row = rows.insertRow(-1);
@@ -66,12 +69,27 @@ function showExamlist(data) {
                 cell.appendChild(field);
 
                 cell = row.insertCell(-1);
+                if (exam.student.email != prevEmail) {
+                    prevEmail = exam.student.email;
+                    count++;
+                    cell.innerText = count;
+                }
+                cell = row.insertCell(-1);
                 field = document.createElement("input");
                 field.value = exam.room;
                 field.size = 10;
                 field.setAttribute("data-examUUID", exam.exam_uuid);
                 field.addEventListener("change", saveExam);
                 cell.appendChild(field);
+
+                cell = row.insertCell(-1);
+                let dropdown = document.createElement("select");
+                dropdown.setAttribute("data-examUUID", exam.exam_uuid);
+                dropdown.addEventListener("change", saveExam);
+                dropdown.classList = "form-select";
+                addOptions(dropdown);
+                dropdown.value = exam.status;
+                cell.appendChild(dropdown);
 
                 cell = row.insertCell(-1);
                 cell.innerHTML = exam.student.firstname + " " + exam.student.lastname;
@@ -85,14 +103,24 @@ function showExamlist(data) {
                 cell.innerHTML = exam.module + " / " + exam.exam_num;
                 cell = row.insertCell(-1);
                 cell.innerHTML = exam.duration;
-                cell = row.insertCell(-1);
-                cell.innerHTML = exam.status;
+
             } catch (error) {
                 console.log("Error in exam with uuid: " + exam.exam_uuid);
             }
         });
+        lockForm("filterForm", locked);
         showMessage("clear", "");
     })();
+}
+
+function addOptions(field) {
+    let values = ["pendent", "offen", "abgegeben", "erhalten", "erledigt", "pnab", "gelöscht"];
+    values.forEach(element => {
+        let option = document.createElement("option");
+        option.value = element;
+        option.innerHTML = element;
+        field.appendChild(option);
+    })
 }
 
 /**
@@ -115,6 +143,11 @@ function setEventList(data) {
             let option = document.createElement("option");
             option.value = event.event_uuid;
             option.text = event.datetime;
+            let locked = "true";
+            event.supervisors.forEach(supervisor => {
+                if (supervisor == user) locked = "false";
+            });
+            option.setAttribute("data-locked", locked);
             dateSearch.appendChild(option);
         });
     })();
@@ -140,16 +173,16 @@ function sortExams(examA, examB) {
  * @param event
  */
 function saveExam(event) {
-    const button = event.target;
-    const uuid = button.getAttribute("data-examUUID");
-    const room = button.value;
-    const url = API_URL + "/exam";
+    const field = event.target;
+    const uuid = field.getAttribute("data-examUUID");
     let data = new URLSearchParams();
     data.set("exam_uuid", uuid);
-    data.set("room", room);
+    if (field.tagName === "INPUT") data.set("room", field.value);
+    else data.set("status", field.value);
 
-    fetch(url, {
-        method: "POST",
+
+    fetch(API_URL + "/exam", {
+        method: "PUT",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded",
             "Authorization": "Bearer " + readStorage("token")
@@ -159,7 +192,7 @@ function saveExam(event) {
             console.log(response);
         } else return response;
     }).then(() => {
-        showMessage("info", "Gespeichert")
+        showMessage("info", "Gespeichert", 0, 2000);
     }).catch(function (error) {
         console.log(error);
     });
@@ -171,7 +204,7 @@ function saveExam(event) {
  * @param event
  */
 function sendAllEmail(event) {
-showMessage("info", "Sende Emails ...")
+    showMessage("info", "Sende Emails ...", 1000);
     let data = new URLSearchParams();
     const boxes = document.querySelectorAll("input:checked");
     if (boxes.length > 0) {
@@ -204,7 +237,7 @@ showMessage("info", "Sende Emails ...")
  * @param event
  */
 function createAllPDF(event) {
-    showMessage("info", "PDF wird erstellt ...")
+    showMessage("info", "PDF wird erstellt ...", 1000);
     let data = new URLSearchParams();
     const boxes = document.querySelectorAll("input:checked");
     if (boxes.length > 0) {

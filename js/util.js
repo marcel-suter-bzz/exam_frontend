@@ -8,6 +8,7 @@ const user = readStorage("email");
 const role = readStorage("role");
 let delayTimer;
 let messageTimer;
+let running = false;
 
 /**
  * sends a get request via fetch
@@ -47,26 +48,34 @@ function getRequest(url) {
  * @param type  message type
  * @param message
  */
-function showMessage(type, message="") {
-    (async () => {
-        let exists = false;
-        while (!exists) {
-            exists = document.readyState === "complete";
-            if (!exists)
-                await new Promise(resolve => setTimeout(resolve, 100));
+function showMessage(type, message = "", minTime = 0, timeout = 0) {
+    const field = document.getElementById("messages");
+
+    if (type == "clear") {
+        if (running) {
+            setTimeout(() => {
+                showMessage("clear", "&nbsp;", 250);
+            })
+        } else {
+            clearTimeout(messageTimer);
+            field.className = "alert";
+            field.innerHTML = "&nbsp;";
         }
-        const field = document.getElementById("messages");
-        field.className = "alert alert-" + type;
+    } else {
+        field.className = "alert-" + type;
         field.innerHTML = message;
 
-        if (type == "success") {
+        if (timeout > 0) {
             messageTimer = setTimeout(() => {
                 showMessage("clear", "&nbsp;");
-            }, 1000);
-        } else if (type == "clear") {
-            clearTimeout(messageTimer);
+            }, timeout);
+        } else if (minTime > 0) {
+            running = true;
+            messageTimer = setTimeout(() => {
+                running = false;
+            }, minTime);
         }
-    })();
+    }
 }
 
 /**
@@ -102,9 +111,9 @@ function lockForm(formId, locked = true) {
     for (let i = 0; i < fields.length; i++) {
         const field = fields[i];
         if (field.type == "hidden" ||
-        field.getAttribute("data-edit") == "all");
+            field.getAttribute("data-edit") == "all") ;
         else if (field.tagName === "INPUT") {
-            field.readOnly = locked;
+            field.disabled = locked;
         } else if (field.tagName === "SELECT") {
             field.disabled = locked;
         }
