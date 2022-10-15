@@ -27,7 +27,7 @@ function saveExam(data) {
             method: httpMethod,
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
-                "Authorization": "Bearer " + readStorage("token")
+                "Authorization": "Bearer " + readStorage("access")
             },
             body: data
         }).then(function (response) {

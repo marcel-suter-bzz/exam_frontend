@@ -185,7 +185,7 @@ function saveExam(event) {
         method: "PUT",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded",
-            "Authorization": "Bearer " + readStorage("token")
+            "Authorization": "Bearer " + readStorage("access")
         }, body: data
     }).then(function (response) {
         if (!response.ok) {
@@ -215,7 +215,7 @@ function sendAllEmail(event) {
             method: "PUT",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
-                "Authorization": "Bearer " + readStorage("token")
+                "Authorization": "Bearer " + readStorage("access")
             }, body: data
         }).then(function (response) {
             if (!response.ok) {
@@ -248,7 +248,7 @@ function createAllPDF(event) {
             method: "PUT",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
-                "Authorization": "Bearer " + readStorage("token")
+                "Authorization": "Bearer " + readStorage("access")
             }, body: data
         }).then(function (response) {
             if (!response.ok) {

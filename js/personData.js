@@ -28,7 +28,7 @@ function authenticateUser(email, password) {
             } else return response;
         }).then(response => response.json())
             .then(data => {
-                writeStorage(data)
+                writeStorage(data);
                 resolve("SUCCESS");
             }).catch(function (error) {
             console.log(error);

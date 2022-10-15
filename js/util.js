@@ -11,43 +11,72 @@ let messageTimer;
 let running = false;
 
 /**
- * sends a get request via fetch
+ * controls the fetch requests, refreshes the access-token if needed
  * @param url  the request URL
  * @returns {Promise<unknown>}
  */
-function getRequest(url) {
-    return new Promise((resolve, reject) => {
-        fetch(url, {
+async function getRequest(url) {
+    let reason = "";
+    try {
+        let result = await httpFetch(url);
+        return Promise.resolve(result);
+    } catch (err) {
+        console.log(err);
+        reason = err;
+    }
+
+    if (reason === "401") {
+        try {
+            let data = await httpFetch(API_URL + '/login/' + user, "refresh");
+            writeStorage(data);
+            let result = await httpFetch(url);
+        } catch (err) {
+            reason = err;
+        }
+    }
+
+    if (reason === "401") {
+        window.location.href("./");
+    }
+    return Promise.reject(reason);
+}
+
+/**
+ * executes the http fetch and returns a promise
+ * @param url  the fetch-url
+ * @param token  which token to send (access or refresh)
+ * @returns {Promise<string|any>}
+ */
+async function httpFetch(url, token = "access") {
+
+    try {
+        let response = await fetch(url, {
             headers: {
-                "Authorization": "Bearer " + readStorage("token")
-            },
-        }).then(function (response) {
-            if (response.ok) {
-                return response;
-            } else if (response.status === 401) {
-                window.location.href = "./";
-                reject("401");
-            } else if (response.status === 404) {
-                resolve(null);
-            } else {
-                console.log(response);
-                reject(response.status);
+                "Authorization": "Bearer " + readStorage(token)
             }
-        }).then(response => response.json()
-        ).then(data => {
-            resolve(data);
-        }).catch(function (error) {
-            console.log(error);
-            reject(error.status);
         });
-    });
+        if (response.ok) {
+            data = response.json();
+            return Promise.resolve(data);
+        } else if (response.status === 401) {
+            return Promise.reject("401");
+        } else if (response.status === 404) {
+            return Promise.resolve("[]");
+        } else {
+            console.log(response);
+            return Promise.reject(response.status);
+        }
+    } catch (err) {
+        console.log(err);
+        return Promise.reject(err.status);
+    }
 }
 
 /*
- * shows a info/warn/error-message
- * @param type  message type
- * @param message
- */
+* shows a info/warn/error-message
+* @param type  message type
+* @param message
+*/
 function showMessage(type, message = "", minTime = 0, timeout = 0) {
     const field = document.getElementById("messages");
 
@@ -76,28 +105,6 @@ function showMessage(type, message = "", minTime = 0, timeout = 0) {
             }, minTime);
         }
     }
-}
-
-/**
- * creates an input field element
- * @param name
- * @param type
- * @param value
- * @param size
- */
-function makeField(name, type, value, size = 0) {
-    let inputField = document.createElement("input");
-    inputField.name = name;
-    if (type === "integer") {
-        inputField.type = "number";
-        inputField.step = 1;
-    } else {
-        inputField.type = type;
-    }
-    inputField.value = value;
-    if (size !== 0) inputField.size = size;
-
-    return inputField;
 }
 
 /**

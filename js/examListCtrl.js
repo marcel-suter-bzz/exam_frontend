@@ -351,7 +351,7 @@ function resetForm() {
 function sendEmail(event) {
     const uuid = getExamUUID(event)
     getRequest(
-        API_URL + "/email/" + uuid
+        API_URL + "/email/" + uuid + "/missed"   // TODO type of mail depending on status
     ).then(showMessage("info", "Email gesendet"));
 }
 
