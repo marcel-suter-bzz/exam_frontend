@@ -3,7 +3,7 @@
  * @author Marcel Suter
  */
 
-const API_URL = "http://127.0.0.1:5000";
+import {API_URL} from "./config";
 const user = readStorage("email");
 const role = readStorage("role");
 let delayTimer;
@@ -30,13 +30,15 @@ async function getRequest(url) {
             let data = await httpFetch(API_URL + '/login/' + user, "refresh");
             writeStorage(data);
             let result = await httpFetch(url);
+            return Promise.resolve(result);
         } catch (err) {
+            console.log(err);
             reason = err;
         }
     }
 
     if (reason === "401") {
-        window.location.href("./");
+        window.location.href = "./";
     }
     return Promise.reject(reason);
 }

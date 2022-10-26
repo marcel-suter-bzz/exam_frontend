@@ -129,7 +129,7 @@ function searchExamlist() {
         ).then(data => {
             showExamlist(data);
         }).catch(result => {
-
+            console.log(result);
         });
     }, 500);
 }
