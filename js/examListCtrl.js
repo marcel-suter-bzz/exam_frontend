@@ -16,7 +16,7 @@ readEventList()
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("statusSearch").addEventListener("change", searchExamlist);
     document.getElementById("editform").classList.add("d-none");
-    if (role === "student") {
+    if (role !== "teacher") {
         document.getElementById("studentSearch").value = user;
         document.getElementById("examadd").hidden = true;
         lockForm("editform", true);
@@ -147,7 +147,8 @@ function showExamlist(data) {
                 await new Promise(resolve => setTimeout(resolve, 100));
         }
 
-        data.sort(sortExams);
+        if (data.length > 0)
+            data.sort(sortExams);
         let rows = document.getElementById("examlist")
             .getElementsByTagName("tbody")[0];
         rows.innerHTML = "";
@@ -168,7 +169,6 @@ function showExamlist(data) {
                 if (role == "teacher") {
                     button = document.createElement("button");
                     button.innerHTML = "<img src='./img/email.svg' width='20px'/>";
-                    ;
                     button.type = "button";
                     button.id = "sendEmail";
                     button.title = "Email";

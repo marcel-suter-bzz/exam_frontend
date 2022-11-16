@@ -26,7 +26,7 @@ async function getRequest(url) {
 
     if (reason === "401") {
         try {
-            let data = await httpFetch(API_URL + '/login/' + user, "refresh");
+            let data = await httpFetch(API_URL + '/refresh/' + user, "refresh");
             writeStorage(data);
             let result = await httpFetch(url);
             return Promise.resolve(result);

@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="author" content="Marcel Suter">
   <title>Nachprüfung</title>
+  <script src="https://alcdn.msauth.net/browser/2.30.0/js/msal-browser.js"
+    integrity="sha384-o4ufwq3oKqc7IoCcR08YtZXmgOljhTggRwxP2CLbSqeXGtitAxwYaUln/05nJjit"
+    crossorigin="anonymous"></script>
   <script src="./js/config.js"></script>
   <script src="./js/util.js" defer></script>
   <script src="./js/personData.js" defer></script>
@@ -14,7 +17,7 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light">
-  <div class="container-lg">
+  <div class="container-md">
     <a class="navbar-brand" href="#">
       <img src="./img/BZZ_Logo_Web.png" alt="" width="30" height="30"/>
       BZZ Nachprüfungen
@@ -26,11 +29,21 @@
     </ul>
   </div>
 </nav>
-<main class="container-lg">
+<main class="container">
   <div id="popup" class="container position-fixed ">
     <div id="messages" class="alert" role="alert"></div>
   </div>
-  <form id="loginform">
+  <div id="title">
+    <h2>Anmeldung für BZZ-Nachprüfungen</h2>
+  </div>
+  <div>
+    <h4>Verwenden Sie Ihr Benutzerkonto bei</h4>
+    <button id="oauth" type="button" class="btn btn-primary">
+      BZZ Intranet
+    </button>
+  </div>
+  <!-- form id="loginform">
+    <h3>Login ohne BZZ-Intranet</h3>
     <div class="mb-3 col-xs-12 col-3">
       <label for="email" class="form-label">Email</label>
       <input type="email" class="form-control" id="email" size="40" aria-describedby="emailHelp">
@@ -41,14 +54,15 @@
       <input type="password" class="form-control" id="password" size="40" aria-describedby="passwordHelp">
       <div id="passwordHelp" class="form-text"></div>
     </div>
-    <button id="login" type="submit">Anmelden</button>
-  </form>
-  <div>
+    <button class="btn btn-primary" id="login" type="submit">Anmelden</button>
+  </form -->
+  <!--div>
     <ul>
-      <li>Fa.No@bzz.local</li>
-      <li>c.benson@bzz.local</li>
+      <li>Fa.No@bzz.local  (Schüler)</li>
+      <li>c.benson@bzz.local   (Lehrer)</li>
+      <li>hanna.heimspiel@bzz.local  (Aufsicht)</li>
     </ul>
-  </div>
+  </div -->
 </main>
 <footer class="text-center text-lg-start">
   <div class="container-xxl text-info text-center p-3">
