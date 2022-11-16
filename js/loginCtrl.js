@@ -6,7 +6,10 @@ let username = "";
  */
 document.addEventListener("DOMContentLoaded", () => {
     //document.getElementById("loginform").addEventListener("submit", sendLogin);
-    document.getElementById("oauth").addEventListener("click", signIn);
+    let login = document.getElementById("login");
+    if (login != null) login.addEventListener("click", signIn);
+    let logout = document.getElementById("logout");
+    if (logout != null) logout.addEventListener("click", signOut);
 });
 
 /**
