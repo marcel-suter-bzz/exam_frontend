@@ -114,7 +114,7 @@ function showExamlist(data, locked) {
 }
 
 function addOptions(field) {
-    let values = ["pendent", "offen", "abgegeben", "erhalten", "erledigt", "pnab", "gelöscht"];
+    let values = ["pendent", "offen", "abgegeben", "erhalten", "erledigt", "pnab", "geloescht"];
     values.forEach(element => {
         let option = document.createElement("option");
         option.value = element;
@@ -166,37 +166,6 @@ function sortExams(examA, examB) {
     const compare = examA.student.lastname.toString().localeCompare(examB.student.lastname.toString());
     if (compare !== 0) return compare;
     return examA.student.firstname.localeCompare(examB.student.firstname);
-}
-
-/**
- * saves the changes to the exam
- * @param event
- */
-function saveExam(event) {
-    const field = event.target;
-    const uuid = field.getAttribute("data-examUUID");
-    let data = new URLSearchParams();
-    data.set("exam_uuid", uuid);
-    if (field.tagName === "INPUT") data.set("room", field.value);
-    else data.set("status", field.value);
-
-
-    fetch(API_URL + "/exam", {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            "Authorization": "Bearer " + readStorage("access")
-        }, body: data
-    }).then(function (response) {
-        if (!response.ok) {
-            console.log(response);
-        } else return response;
-    }).then(() => {
-        showMessage("info", "Gespeichert", 0, 2000);
-    }).catch(function (error) {
-        console.log(error);
-    });
-
 }
 
 /**

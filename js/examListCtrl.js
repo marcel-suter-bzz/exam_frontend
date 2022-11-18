@@ -322,12 +322,10 @@ function submitExam(event) {
 
         saveExam(
             data
-        ).then(result => {
-            if (response.ok) {
-                document.getElementById("editform").classList.add("d-none");
-                document.getElementById("list").classList.remove("d-none");
-                searchExamlist();
-            }
+        ).then(function () {
+            document.getElementById("editform").classList.add("d-none");
+            document.getElementById("list").classList.remove("d-none");
+            searchExamlist();
         }).catch(result => {
 
         });
