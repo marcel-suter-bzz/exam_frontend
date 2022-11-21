@@ -5,8 +5,8 @@
   <meta name="author" content="Marcel Suter">
   <title>Nachprüfung</title>
   <script src="https://alcdn.msauth.net/browser/2.30.0/js/msal-browser.js"
-    integrity="sha384-o4ufwq3oKqc7IoCcR08YtZXmgOljhTggRwxP2CLbSqeXGtitAxwYaUln/05nJjit"
-    crossorigin="anonymous"></script>
+          integrity="sha384-o4ufwq3oKqc7IoCcR08YtZXmgOljhTggRwxP2CLbSqeXGtitAxwYaUln/05nJjit"
+          crossorigin="anonymous"></script>
   <script src="./js/config.js"></script>
   <script src="./js/util.js"></script>
   <script src="./js/examData.js"></script>
@@ -14,7 +14,7 @@
   <script src="./js/personData.js"></script>
   <script src="./js/loginCtrl.js"></script>
   <script src="./js/examListCtrl.js" defer></script>
-  <link rel="stylesheet" href="./css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
   <link rel="stylesheet" href="./css/exam.css">
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 </head>
@@ -35,6 +35,7 @@
     </ul>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li>
         <a id="logout" href="#">
           <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi bi-box-arrow-right"
                viewBox="0 0 16 16">
@@ -44,6 +45,7 @@
                   d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
           </svg>
         </a>
+        </li>
       </ul>
     </div>
 
@@ -62,13 +64,15 @@
             &nbsp;<br/>Suchen
           </th>
           <th scope="col">
-            Lehrperson<br/><input id="teacherSearch" class="form-control" type="text" placeholder="Alle"/>
+            <label for="teacherSearch">Lehrperson</label><br/>
+            <input id="teacherSearch" class="form-control" type="text" placeholder="Alle"/>
           </th>
           <th scope="col">
-            Lernender<br/><input id="studentSearch" class="form-control" type="text"/>
+            <label for="studentSearch">Lernender</label><br/>
+            <input id="studentSearch" class="form-control" type="text"/>
           </th>
           <th scope="col">
-            Termin<br/>
+            <label for="dateSearch">Termin</label><br/>
             <select id="dateSearch" class="form-select" data-edit="all" type="text">
               <option value="all">Alle</option>
             </select>
@@ -108,15 +112,7 @@
       <fieldset class="row g-3 border">
         <legend>Prüfungsdetails</legend>
         <div class="row">
-          <div class="col-xl-4 col-lg-6 col-md-12">
-            <label for="teacher.fullname" class="form-label">Lehrperson</label>
-            <input type="text" required class="form-control" id="teacher.fullname"
-                   list="teacher.list" autocomplete="off"/>
-            <datalist id="teacher.list">
-              <option value="">
-            </datalist>
-          </div>
-          <div class="col-xl-4 col-lg-6 col-md-12">
+          <div class="col-lg-6 col-md-12">
             <label for="student.fullname" class="form-label">Lernender</label>
             <input type="text" required class="form-control" id="student.fullname" list="student.list"
                    autocomplete="off"/>
@@ -124,38 +120,45 @@
               <option value="">
             </datalist>
           </div>
-          <div class="col-xl-4 col-lg-6 col-md-12">
+          <div class="col-lg-6 col-md-12">
             <label for="cohort" class="form-label">Klasse</label>
             <input type="text" required class="form-control" id="cohort"/>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-xl-4 col-lg-6 col-md-12">
+
+          <div class="col-lg-6 col-md-12">
+            <label for="teacher.fullname" class="form-label">Lehrperson</label>
+            <input type="text" required class="form-control" id="teacher.fullname"
+                   list="teacher.list" autocomplete="off"/>
+            <datalist id="teacher.list">
+              <option value="">
+            </datalist>
+          </div>
+
+          <div class="col-lg-6 col-md-12">
             <label for="module" class="form-label">Fach/Modul</label>
             <input type="text" required class="form-control" id="module"/>
           </div>
-          <div class="col-xl-4 col-lg-6 col-md-12">
+          <div class="col-lg-6 col-md-12">
             <label for="exam_num" class="form-label">Prüfung</label>
             <input type="text" class="form-control" id="exam_num"/>
           </div>
-          <div class="col-xl-4 col-lg-6 col-md-12">
+          <div class="col-lg-6 col-md-12">
             <label for="missed" class="form-label">
               Prüfungsdatum
               <i class="bi bi-question-circle-fill text-info" title="Datum der verpassten Prüfung"></i>
             </label>
             <input type="date" required class="form-control" id="missed"/>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-xl-4 col-lg-6 col-md-12">
+
+          <div class="col-lg-6 col-md-12">
             <label for="event_uuid" class="form-label">Nachprüfungstermin</label>
             <select required class="form-select" id="event_uuid"></select>
           </div>
-          <div class="col-xl-4 col-lg-6 col-md-12">
+          <div class="col-lg-6 col-md-12">
             <label for="duration" class="form-label">Dauer</label>
             <input type="number" required class="form-control" id="duration"/>
           </div>
-          <div class="col-xl-4 col-lg-6 col-md-12">
+          <div class="col-lg-6 col-md-12">
             <label for="status" class="form-label">
               Status
               <i class="bi bi-question-circle-fill text-info" title="Anklicken für Details"></i>
@@ -170,7 +173,15 @@
               <option value="geloescht">gelöscht</option>
             </select>
           </div>
-          <div class="col-xl-4 col-lg-6 col-md-12">
+          <div class="col-12">
+            <label for="tools" class="form-label">Hilfsmittel</label>
+            <input type="text" class="form-control" id="tools"/>
+          </div>
+          <div class="col-12">
+            <label for="remarks" class="form-label">Anmerkungen für Aufsicht</label>
+            <input type="text" class="form-control" id="remarks"/>
+          </div>
+          <div class="col-lg-6 col-md-12">
             <label for="room" class="form-label">
               Raum
               <i class="bi bi-question-circle-fill text-info" title="Wird durch Aufsicht ausgefüllt"></i>
@@ -178,18 +189,8 @@
             <span id="room" class="form-control" readonly>&nbsp;</span>
           </div>
         </div>
-        <div class="col-12">
-          <div class="">
-            <label for="tools" class="form-label">Hilfsmittel</label>
-            <input type="text" class="form-control" id="tools"/>
-          </div>
-          <div class="">
-            <label for="remarks" class="form-label">Anmerkungen für Aufsicht</label>
-            <input type="text" class="form-control" id="remarks"/>
-          </div>
-        </div>
-        <div class="col-lg-12">
-          <div class="">
+        <div class="row">
+          <div class="col-lg-12">
             <button class="btn btn-primary" type="submit" id="saveexam" name="safeexam">Speichern</button>
             <button class="btn btn-primary" type="submit" id="sendexam" name="sendexam">Speichern & Email</button>
             <button class="btn btn-light" id="cancel" name="cancel" type="reset">Abbruch</button>

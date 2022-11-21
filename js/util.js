@@ -48,7 +48,7 @@ async function getRequest(url) {
  * @param token  which token to send (access or refresh)
  * @returns {Promise<string|any>}
  */
-async function httpFetch(url, token = "access") {
+async function httpFetch(url, token = "access", type = "json") {
 
     try {
         let response = await fetch(url, {
@@ -57,7 +57,10 @@ async function httpFetch(url, token = "access") {
             }
         });
         if (response.ok) {
-            data = response.json();
+            if (type === "json")
+                data = response.json();
+            else
+                data = response.blob();
             return Promise.resolve(data);
         } else if (response.status === 401) {
             return Promise.reject("401");
@@ -127,28 +130,6 @@ function lockForm(formId, locked = true) {
         }
 
     }
-}
-
-/**
- * gets the value of the cookie with the specified name
- * Source: https://www.w3schools.com/js/js_cookies.asp
- * @param cname  the name of the cookie
- * @returns {string}
- */
-function getCookie(cname) {
-    let name = cname + "=";
-    let decodedCookie = decodeURIComponent(document.cookie);
-    let cookieArray = decodedCookie.split(';');
-    for (let i = 0; i < cookieArray.length; i++) {
-        let cookie = cookieArray[i];
-        while (cookie.charAt(0) === ' ') {
-            cookie = cookie.substring(1);
-        }
-        if (cookie.indexOf(name) === 0) {
-            return cookie.substring(name.length, cookie.length);
-        }
-    }
-    return "";
 }
 
 /**

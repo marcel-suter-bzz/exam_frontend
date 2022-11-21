@@ -21,7 +21,7 @@ function readExamlist(filter) {
 function saveExam(data) {
 
     let httpMethod = "POST";
-    if (data.get("exam_uuid") !== "") httpMethod = "PUT";
+    if (data["exam_uuid"] !== "") httpMethod = "PUT";
     return new Promise((resolve, reject) => {
         fetch(API_URL + "/exam", {
             method: httpMethod,

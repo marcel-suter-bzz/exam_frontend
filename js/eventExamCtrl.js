@@ -32,7 +32,7 @@ function searchExamlist() {
     const option = select.options[select.selectedIndex];
     let locked = option.getAttribute("data-locked");
     readExamlist(filter).then(data => {
-        showExamlist(data, locked==="true");
+        showExamlist(data, locked === "true");
     }).catch(result => {
 
     });
@@ -69,7 +69,7 @@ function showExamlist(data, locked) {
                 cell.appendChild(field);
 
                 cell = row.insertCell(-1);
-                if (exam.student.email != prevEmail) {
+                if (exam.student.email !== prevEmail) {
                     prevEmail = exam.student.email;
                     count++;
                     cell.innerText = count;
@@ -77,18 +77,20 @@ function showExamlist(data, locked) {
                 cell = row.insertCell(-1);
                 field = document.createElement("input");
                 field.value = exam.room;
+                field.name = "room";
                 field.size = 10;
                 field.setAttribute("data-examUUID", exam.exam_uuid);
-                field.addEventListener("change", saveExam);
+                field.addEventListener("change", changeExam);
                 cell.appendChild(field);
 
                 cell = row.insertCell(-1);
                 let dropdown = document.createElement("select");
                 dropdown.setAttribute("data-examUUID", exam.exam_uuid);
-                dropdown.addEventListener("change", saveExam);
+                dropdown.addEventListener("change", changeExam);
                 dropdown.classList = "form-select";
                 addOptions(dropdown);
                 dropdown.value = exam.status;
+                dropdown.name = "status";
                 cell.appendChild(dropdown);
 
                 cell = row.insertCell(-1);
@@ -113,6 +115,20 @@ function showExamlist(data, locked) {
     })();
 }
 
+function changeExam(event) {
+    let examUUID = event.target.getAttribute('data-examUUID');
+    let data = new URLSearchParams();
+    data.set('exam_uuid', examUUID);
+    let fieldname = event.target.name;
+    data.set(fieldname, event.target.value);
+    saveExam(data);
+
+}
+
+/**
+ * adds options to the status dropdown
+ * @param field  id of the element
+ */
 function addOptions(field) {
     let values = ["pendent", "offen", "abgegeben", "erhalten", "erledigt", "pnab", "geloescht"];
     values.forEach(element => {
@@ -145,7 +161,7 @@ function setEventList(data) {
             option.text = event.datetime;
             let locked = "true";
             event.supervisors.forEach(supervisor => {
-                if (supervisor == user) locked = "false";
+                if (supervisor === user) locked = "false";
             });
             option.setAttribute("data-locked", locked);
             dateSearch.appendChild(option);
@@ -211,7 +227,9 @@ function createAllPDF(event) {
     const boxes = document.querySelectorAll("input:checked");
     if (boxes.length > 0) {
         for (const box of boxes) {
-            data.append("exam_uuid", box.getAttribute("data-examuuid"));
+            let examUUID = box.getAttribute("data-examuuid");
+            if (examUUID != null)
+                data.append("exam_uuid", examUUID);
         }
         fetch(API_URL + "/print", {
             method: "PUT",
@@ -225,7 +243,7 @@ function createAllPDF(event) {
             } else return response;
         }).then(response => response.text()
         ).then(pdf_name => {
-            let url = API_URL + "/output/" + pdf_name;
+            let url = "./output/" + pdf_name;
             window.open(url, "_blank");
             showMessage("clear", "")
         }).catch(function (error) {

@@ -246,18 +246,22 @@ function setEventList(data) {
  * @returns compare result
  */
 function sortExams(examA, examB) {
-    const dateA = eventList[examA.event_uuid].datetime;
-    const dateB = eventList[examB.event_uuid].datetime;
-    if (dateA < dateB) {
-        return -1;
-    }
-    if (dateA > dateB) {
-        return 1;
-    }
+    try {
+        const dateA = eventList[examA.event_uuid].datetime;
+        const dateB = eventList[examB.event_uuid].datetime;
+        if (dateA < dateB) {
+            return -1;
+        }
+        if (dateA > dateB) {
+            return 1;
+        }
 
-    const compare = examA.student.lastname.toString().localeCompare(examB.student.lastname.toString());
-    if (compare !== 0) return compare;
-    return examA.student.firstname.localeCompare(examB.student.firstname);
+        const compare = examA.student.lastname.toString().localeCompare(examB.student.lastname.toString());
+        if (compare !== 0) return compare;
+        return examA.student.firstname.localeCompare(examB.student.firstname);
+    } catch (e) {
+        return 0;
+    }
 
 }
 
@@ -275,7 +279,7 @@ function selectExam(event) {
         for (let property in exam) {
             if (typeof exam[property] === "object") {
                 if (property === "student" || property === "teacher") {
-                    document.getElementById(property + ".fullname").value = exam[property].fullname;
+                    document.getElementById(property + ".fullname").value = exam[property].fullname + " (" + exam[property].email + ")";
                     document.getElementById(property).value = exam[property].email;
                 }
             } else {
@@ -338,6 +342,9 @@ function submitExam(event) {
 function resetForm() {
     document.getElementById("editform").classList.add("d-none");
     document.getElementById("list").classList.remove("d-none");
+    document.getElementById("exam_uuid").value = ""
+    document.getElementById("teacher").value = ""
+    document.getElementById("student").value = ""
     document.getElementById("examlist").focus();
 }
 
@@ -359,6 +366,11 @@ function sendEmail(event) {
  */
 function createPDF(event) {
     const uuid = getExamUUID(event)
-    let url = "./print/" + uuid;
-    window.open(url, "_blank");
+    httpFetch(API_URL + "/print/" + uuid, "access","blob")
+        .then((blob) => { // RETRIEVE THE BLOB AND CREATE LOCAL URL
+          var _url = window.URL.createObjectURL(blob);
+          window.open(_url, "_blank").focus(); // window.open + focus
+      }).catch((err) => {
+        console.log(err);
+      });
 }
