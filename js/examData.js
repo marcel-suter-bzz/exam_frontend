@@ -3,7 +3,7 @@
  * @param uuid
  */
 function readExam(uuid) {
-    return getRequest(API_URL + "/exam/" + uuid);
+    return sendRequest(API_URL + "/exam/" + uuid);
 }
 
 /**
@@ -11,7 +11,7 @@ function readExam(uuid) {
  * @param filter
  */
 function readExamlist(filter) {
-    return getRequest(API_URL + "/exams?" + filter);
+    return sendRequest(API_URL + "/exams?" + filter);
 }
 
 /**
@@ -22,6 +22,8 @@ function saveExam(data) {
 
     let httpMethod = "POST";
     if (data["exam_uuid"] !== "") httpMethod = "PUT";
+    return sendRequest(API_URL + "/exam", httpMethod, data, "text");
+    /*
     return new Promise((resolve, reject) => {
         fetch(API_URL + "/exam", {
             method: httpMethod,
@@ -43,4 +45,5 @@ function saveExam(data) {
             reject(response.status);
         });
     });
+     */
 }

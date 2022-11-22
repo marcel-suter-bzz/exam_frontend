@@ -3,7 +3,7 @@
  * @param filter
  */
 function loadPeople(filter, fieldname) {
-    return getRequest(API_URL + "/people/" + filter);
+    return sendRequest(API_URL + "/people/" + filter);
 }
 
 /**

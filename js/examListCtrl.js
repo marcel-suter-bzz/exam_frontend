@@ -358,7 +358,7 @@ function sendEmail(event) {
     const uuid = getExamUUID(event);
     const status = getStatus(event);
 
-    getRequest(
+    sendRequest(
         API_URL + "/email/" + uuid + "/" + status
     ).then(showMessage("info", "Email gesendet"));
 }
@@ -369,7 +369,7 @@ function sendEmail(event) {
  */
 function createPDF(event) {
     const uuid = getExamUUID(event)
-    httpFetch(API_URL + "/print/" + uuid, "access","blob")
+    sendRequest(API_URL + "/print/" + uuid, "GET",null, "blob")
         .then((blob) => { // RETRIEVE THE BLOB AND CREATE LOCAL URL
           var _url = window.URL.createObjectURL(blob);
           window.open(_url, "_blank").focus(); // window.open + focus

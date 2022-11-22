@@ -12,12 +12,15 @@ let running = false;
 /**
  * controls the fetch requests, refreshes the access-token if needed
  * @param url  the request URL
+ * @param method the http-method
+ * @param bodyData  the data to send (POST/PUT only)
+ * @param type  the type of the response
  * @returns {Promise<unknown>}
  */
-async function getRequest(url) {
+async function sendRequest(url, method = "GET", bodyData = null, type = "json") {
     let reason = "";
     try {
-        let result = await httpFetch(url);
+        let result = await httpFetch(url, method, bodyData, "access", type);
         return Promise.resolve(result);
     } catch (err) {
         console.log(err);
@@ -26,9 +29,9 @@ async function getRequest(url) {
 
     if (reason === "401") {
         try {
-            let data = await httpFetch(API_URL + '/refresh/' + user, "refresh");
+            let data = await httpFetch(API_URL + '/refresh/' + user, "GET", null, "refresh");
             writeStorage(data);
-            let result = await httpFetch(url);
+            let result = await httpFetch(url, method, bodyData, "access", type);
             return Promise.resolve(result);
         } catch (err) {
             console.log(err);
@@ -45,22 +48,44 @@ async function getRequest(url) {
 /**
  * executes the http fetch and returns a promise
  * @param url  the fetch-url
+ * @param httpMethod  the http-methode
+ * @param data    the data to be sent (PUT/POST only)
  * @param token  which token to send (access or refresh)
  * @returns {Promise<string|any>}
  */
-async function httpFetch(url, token = "access", type = "json") {
+async function httpFetch(
+    url,
+    httpMethod = "GET",
+    data = null,
+    token = "access",
+    type = "json"
+) {
 
     try {
-        let response = await fetch(url, {
-            headers: {
-                "Authorization": "Bearer " + readStorage(token)
-            }
-        });
+        let response;
+        if (httpMethod === "PUT" || httpMethod === "POST") {
+            response = await fetch(url, {
+                method: httpMethod,
+                headers: {
+                    "Authorization": "Bearer " + readStorage(token)
+                },
+                body: data
+            });
+        } else {
+            response = await fetch(url, {
+                method: httpMethod,
+                headers: {
+                    "Authorization": "Bearer " + readStorage(token)
+                }
+            });
+        }
         if (response.ok) {
             if (type === "json")
                 data = response.json();
-            else
+            else if (type === "blob")
                 data = response.blob();
+            else
+                data = response.text();
             return Promise.resolve(data);
         } else if (response.status === 401) {
             return Promise.reject("401");

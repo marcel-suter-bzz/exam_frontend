@@ -74,7 +74,7 @@ function handleResponse(response) {
         };
         writeStorage(storage);
         httpFetch(
-            API_URL + "/login", "idToken"
+            API_URL + "/login", "GET", null, "idToken"
         ).then(function (data) {
             writeStorage(data);
             window.location.href = "./examList.html";
