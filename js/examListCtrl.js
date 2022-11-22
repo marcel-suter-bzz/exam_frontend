@@ -174,6 +174,7 @@ function showExamlist(data) {
                     button.title = "Email";
                     button.className = "btn btn-sm btn-outline-primary";
                     button.setAttribute("data-examuuid", exam.exam_uuid);
+                    button.setAttribute("data-status", exam.status);
                     button.addEventListener("click", sendEmail);
                     cell.appendChild(button);
                     button = document.createElement("button");
@@ -354,9 +355,11 @@ function resetForm() {
  * @param event
  */
 function sendEmail(event) {
-    const uuid = getExamUUID(event)
+    const uuid = getExamUUID(event);
+    const status = getStatus(event);
+
     getRequest(
-        API_URL + "/email/" + uuid + "/missed"   // TODO type of mail depending on status
+        API_URL + "/email/" + uuid + "/" + status
     ).then(showMessage("info", "Email gesendet"));
 }
 

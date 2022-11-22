@@ -194,7 +194,9 @@ function sendAllEmail(event) {
     const boxes = document.querySelectorAll("input:checked");
     if (boxes.length > 0) {
         for (const box of boxes) {
-            data.append("exam_uuid", box.getAttribute("data-examuuid"));
+            if (box.hasAttribute("data-examuuid")) {
+                data.append("exam_uuid", box.getAttribute("data-examuuid"));
+            }
         }
         fetch(API_URL + "/email", {
             method: "PUT",

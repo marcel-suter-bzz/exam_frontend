@@ -162,3 +162,16 @@ function getExamUUID(event) {
     }
     return targetElement.getAttribute("data-examuuid");
 }
+
+/**
+ * gets the status from a button
+ * @param event
+ * @returns {string}
+ */
+function getStatus(event) {
+    let targetElement = event.target;
+    if (targetElement.tagName == "IMG") {
+        targetElement = targetElement.parentNode;
+    }
+    return targetElement.getAttribute("data-status");
+}
