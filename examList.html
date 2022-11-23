@@ -36,15 +36,15 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li>
-        <a id="logout" href="#">
-          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi bi-box-arrow-right"
-               viewBox="0 0 16 16">
-            <path fill-rule="evenodd"
-                  d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
-            <path fill-rule="evenodd"
-                  d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
-          </svg>
-        </a>
+          <a id="logout" href="#">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi bi-box-arrow-right"
+                 viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                    d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
+              <path fill-rule="evenodd"
+                    d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+            </svg>
+          </a>
         </li>
       </ul>
     </div>
@@ -112,7 +112,7 @@
       <fieldset class="row g-3 border">
         <legend>Prüfungsdetails</legend>
         <div class="row">
-          <div class="col-lg-6 col-md-12">
+          <div class="col-lg-3 col-md-6 me-0 pe-0">
             <label for="student.fullname" class="form-label">Lernender</label>
             <input type="text" required class="form-control" id="student.fullname" list="student.list"
                    autocomplete="off"/>
@@ -120,12 +120,16 @@
               <option value="">
             </datalist>
           </div>
+          <div class="col-lg-3 col-md-6 ms-0 ps-0">
+            <label for="student" class="form-label">&nbsp;</label>
+            <input tabindex="-1" class="form-control" id="student" readonly/>
+          </div>
           <div class="col-lg-6 col-md-12">
             <label for="cohort" class="form-label">Klasse</label>
             <input type="text" required class="form-control" id="cohort"/>
           </div>
 
-          <div class="col-lg-6 col-md-12">
+          <div class="col-lg-3 col-md-6 me-0 pe-0">
             <label for="teacher.fullname" class="form-label">Lehrperson</label>
             <input type="text" required class="form-control" id="teacher.fullname"
                    list="teacher.list" autocomplete="off"/>
@@ -133,7 +137,12 @@
               <option value="">
             </datalist>
           </div>
-
+          <div class="col-lg-3 col-md-6 ms-0 ps-0">
+            <label for="teacher" class="form-label">&nbsp;</label>
+            <input tabindex="-1" class="form-control" id="teacher" readonly>
+          </div>
+        </div>
+        <div class="row">
           <div class="col-lg-6 col-md-12">
             <label for="module" class="form-label">Fach/Modul</label>
             <input type="text" required class="form-control" id="module"/>
@@ -149,15 +158,17 @@
             </label>
             <input type="date" required class="form-control" id="missed"/>
           </div>
-
-          <div class="col-lg-6 col-md-12">
-            <label for="event_uuid" class="form-label">Nachprüfungstermin</label>
-            <select required class="form-select" id="event_uuid"></select>
-          </div>
           <div class="col-lg-6 col-md-12">
             <label for="duration" class="form-label">Dauer</label>
             <input type="number" required class="form-control" id="duration"/>
           </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 col-md-12">
+            <label for="event_uuid" class="form-label">Nachprüfungstermin</label>
+            <select required class="form-select" id="event_uuid"></select>
+          </div>
+
           <div class="col-lg-6 col-md-12">
             <label for="status" class="form-label">
               Status
@@ -173,6 +184,15 @@
               <option value="geloescht">gelöscht</option>
             </select>
           </div>
+          <div class="col-lg-6 col-md-12">
+            <label for="room" class="form-label">
+              Raum
+              <i class="bi bi-question-circle-fill text-info" title="Wird durch Aufsicht ausgefüllt"></i>
+            </label>
+            <input type="text" id="room" class="form-control" readonly>&nbsp;</input>
+          </div>
+        </div>
+        <div class="row">
           <div class="col-12">
             <label for="tools" class="form-label">Hilfsmittel</label>
             <input type="text" class="form-control" id="tools"/>
@@ -181,15 +201,8 @@
             <label for="remarks" class="form-label">Anmerkungen für Aufsicht</label>
             <input type="text" class="form-control" id="remarks"/>
           </div>
-          <div class="col-lg-6 col-md-12">
-            <label for="room" class="form-label">
-              Raum
-              <i class="bi bi-question-circle-fill text-info" title="Wird durch Aufsicht ausgefüllt"></i>
-            </label>
-            <span id="room" class="form-control" readonly>&nbsp;</span>
-          </div>
         </div>
-        <div class="row">
+        <div class="row mt-4">
           <div class="col-lg-12">
             <button class="btn btn-primary" type="submit" id="saveexam" name="safeexam">Speichern</button>
             <button class="btn btn-primary" type="submit" id="sendexam" name="sendexam">Speichern & Email</button>
@@ -200,12 +213,6 @@
           <div>
             <input tabindex="-1" type="hidden" class="form-control" id="exam_uuid" readonly/>
           </div>
-          <div class="">
-            <input tabindex="-1" type="hidden" class="form-control" id="teacher" readonly>
-          </div>
-          <div class="">
-            <input tabindex="-1" type="hidden" class="form-control" id="student" readonly/>
-          </div>
         </div>
       </fieldset>
     </form>
@@ -214,7 +221,7 @@
 </main>
 <footer class="text-center text-lg-start">
   <div class="container-xxl text-info text-center p-3">
-    Exam v0.3r20221011 &copy; 2022 by Marcel Suter
+    Exam v0.5r20221122 &copy; 2022 by Marcel Suter
   </div>
 </footer>
 </body>

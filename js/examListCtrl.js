@@ -280,7 +280,7 @@ function selectExam(event) {
         for (let property in exam) {
             if (typeof exam[property] === "object") {
                 if (property === "student" || property === "teacher") {
-                    document.getElementById(property + ".fullname").value = exam[property].fullname + " (" + exam[property].email + ")";
+                    document.getElementById(property + ".fullname").value = exam[property].fullname; // + " (" + exam[property].email + ")";
                     document.getElementById(property).value = exam[property].email;
                 }
             } else {
