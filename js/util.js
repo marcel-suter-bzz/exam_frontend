@@ -51,6 +51,7 @@ async function sendRequest(url, method = "GET", bodyData = null, type = "json") 
  * @param httpMethod  the http-methode
  * @param data    the data to be sent (PUT/POST only)
  * @param token  which token to send (access or refresh)
+ * @param type  type of the response data
  * @returns {Promise<string|any>}
  */
 async function httpFetch(
@@ -109,7 +110,7 @@ async function httpFetch(
 function showMessage(type, message = "", minTime = 0, timeout = 0) {
     const field = document.getElementById("messages");
 
-    if (type == "clear") {
+    if (type === "clear") {
         if (running) {
             setTimeout(() => {
                 showMessage("clear", "&nbsp;", 250);
@@ -146,8 +147,8 @@ function lockForm(formId, locked = true) {
     const fields = form.querySelectorAll("select,input");
     for (let i = 0; i < fields.length; i++) {
         const field = fields[i];
-        if (field.type == "hidden" ||
-            field.getAttribute("data-edit") == "all") ;
+        if (field.type === "hidden" ||
+            field.getAttribute("data-edit") === "all") ;
         else if (field.tagName === "INPUT") {
             field.disabled = locked;
         } else if (field.tagName === "SELECT") {
@@ -182,7 +183,7 @@ function readStorage(item) {
  */
 function getExamUUID(event) {
     let targetElement = event.target;
-    if (targetElement.tagName == "IMG") {
+    if (targetElement.tagName === "IMG") {
         targetElement = targetElement.parentNode;
     }
     return targetElement.getAttribute("data-examuuid");
@@ -195,7 +196,7 @@ function getExamUUID(event) {
  */
 function getStatus(event) {
     let targetElement = event.target;
-    if (targetElement.tagName == "IMG") {
+    if (targetElement.tagName === "IMG") {
         targetElement = targetElement.parentNode;
     }
     return targetElement.getAttribute("data-status");

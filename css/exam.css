@@ -28,7 +28,6 @@ footer .text-center {
     bottom: 50px;
     pointer-events: none;
     z-index: 99;
-    pointer-events: none;
 }
 
 #messages {
@@ -54,7 +53,7 @@ footer .text-center {
 .table thead {
     position: sticky;
     position: -webkit-sticky;
-    top: 0px;
+    top: 0;
     background: white;
     inset-block-start: 0;
 }

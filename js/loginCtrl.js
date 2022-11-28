@@ -21,30 +21,6 @@ myMSALObj.handleRedirectPromise()
         console.error(error);
     });
 
-/**
- * submit the login
- * @param event
- */
-function sendLogin(event) {
-    event.preventDefault();
-    const personForm = document.getElementById("loginform");
-    if (personForm.checkValidity() == true) {
-        authenticateUser(
-            document.getElementById("email").value,
-            document.getElementById("password").value
-        ).then(result => {
-            if (result == "SUCCESS") {
-                window.location.href = "./examList.html";
-            } else {
-                showMessage("danger", "Login nicht erfolgreich");
-            }
-        }).catch(result => {
-            showMessage("danger", "Es ist ein Fehler aufgetreten");
-        });
-
-    }
-}
-
 function selectAccount() {
 
     /**
@@ -67,8 +43,8 @@ function selectAccount() {
 
 function handleResponse(response) {
     if (response !== null) {
-        username = response.account.username;
-        storage = {
+        let username = response.account.username;
+        let storage = {
             "idToken": response.idToken,
             "email": username
         };

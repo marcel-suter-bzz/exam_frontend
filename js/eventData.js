@@ -1,5 +1,5 @@
 /**
- *
+ *  data handler for events
  */
 
 /**

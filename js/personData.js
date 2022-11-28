@@ -2,7 +2,7 @@
  * loads all people mathicng a filter
  * @param filter
  */
-function loadPeople(filter, fieldname) {
+function loadPeople(filter) {
     return sendRequest(API_URL + "/people/" + filter);
 }
 

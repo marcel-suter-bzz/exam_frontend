@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /**
  * search people
- * @param the calling event
+ * @param event the calling event
  */
 function searchPeople(event) {
     clearTimeout(peopleDelay);
@@ -60,7 +60,7 @@ function searchPeople(event) {
         let filter = document.getElementById(fieldname).value;
         if (filter.length >= 2) {
             loadPeople(
-                filter, fieldname
+                filter
             ).then(data => {
                 setPeopleList(data, fieldname);
             });
@@ -70,7 +70,8 @@ function searchPeople(event) {
 
 /**
  * updates the data list for searching people
- * @param data
+ * @param data  a list of people
+ * @param fieldname  the field to add the datalist
  */
 function setPeopleList(data, fieldname) {
     let parts = fieldname.split(".");
@@ -87,7 +88,7 @@ function setPeopleList(data, fieldname) {
 
 /**
  * sets the values of the selected person
- * @param the calling event
+ * @param event the calling event
  */
 function setPerson(event) {
     let fieldname = event.target.id;
@@ -97,7 +98,7 @@ function setPerson(event) {
 
     for (let i = 0; i < datalist.options.length; i++) {
         let option = datalist.options[i];
-        if (option.value == fullname) {
+        if (option.value === fullname) {
             document.getElementById(parts[0]).value = option.getAttribute("data-email");
         }
     }
@@ -119,7 +120,7 @@ function searchExamlist() {
         let status = "none";
         const open = document.getElementById("open").checked;
         const closed = document.getElementById("closed").checked;
-        if (open & closed) status = "all";
+        if (open && closed) status = "all";
         else if (open) status = "open";
         else if (closed) status = "closed";
         filter += "&status=" + status;
@@ -157,7 +158,7 @@ function showExamlist(data) {
                 let row = rows.insertRow(-1);
                 let cell = row.insertCell(-1);
                 let button = document.createElement("button");
-                button.innerHTML = "<img src='./img/edit.svg' width='20px'/>";
+                button.innerHTML = "<img src='./img/edit.svg' width='20px' alt='Bearbeiten'/>";
                 button.type = "button";
                 button.id = "editExam";
                 button.title = "Bearbeiten";
@@ -166,9 +167,9 @@ function showExamlist(data) {
                 button.addEventListener("click", selectExam);
                 cell.appendChild(button);
 
-                if (role == "teacher") {
+                if (role === "teacher") {
                     button = document.createElement("button");
-                    button.innerHTML = "<img src='./img/email.svg' width='20px'/>";
+                    button.innerHTML = "<img src='./img/email.svg' width='20px' alt='Email'/>";
                     button.type = "button";
                     button.id = "sendEmail";
                     button.title = "Email";
@@ -178,7 +179,7 @@ function showExamlist(data) {
                     button.addEventListener("click", sendEmail);
                     cell.appendChild(button);
                     button = document.createElement("button");
-                    button.innerHTML = "<img src='./img/pdf.svg' width='20px'/>";
+                    button.innerHTML = "<img src='./img/pdf.svg' width='20px' alt='PDF'/>";
                     button.type = "button";
                     button.id = "createPDF";
                     button.title = "Drucken";
@@ -304,7 +305,6 @@ function submitExam(event) {
     event.preventDefault();
     const examForm = document.getElementById("editform");
     if (examForm.checkValidity()) {
-        const url = API_URL + "/exam";
         const fields = [
             "exam_uuid",
             "event_uuid",
