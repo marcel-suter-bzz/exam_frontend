@@ -53,10 +53,13 @@ function searchPeople(event) {
     if (event.keyCode < 37 || event.keyCode > 40) {
         peopleDelay = setTimeout(() => {
             let fieldname = event.target.id;
-            let filter = document.getElementById(fieldname).value;
-            if (filter.length >= 2) {
+            let filter_role = "all"
+            if (fieldname === "student.fullname") filter_role = "student";
+            if (fieldname === "teacher.fullname") filter_role = "teacher"
+            let filter_name = document.getElementById(fieldname).value;
+            if (filter_name.length >= 2) {
                 loadPeople(
-                    filter
+                    filter_name, filter_role
                 ).then(data => {
                     setPeopleList(data, fieldname);
                 });

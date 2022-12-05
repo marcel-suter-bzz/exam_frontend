@@ -1,9 +1,9 @@
 /**
- * loads all people mathicng a filter
- * @param filter
+ * loads all people matching a filter
+ * @param filter_name
  */
-function loadPeople(filter) {
-    return sendRequest(API_URL + "/people/" + filter);
+function loadPeople(filter_name, filter_role="all") {
+    return sendRequest(API_URL + "/people/" + filter_name + "/" + filter_role);
 }
 
 /**
