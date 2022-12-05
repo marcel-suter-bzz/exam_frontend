@@ -148,66 +148,70 @@ function showExamlist(data) {
                 await new Promise(resolve => setTimeout(resolve, 100));
         }
 
-        if (data.length > 0)
-            data.sort(sortExams);
         let rows = document.getElementById("examlist")
             .getElementsByTagName("tbody")[0];
         rows.innerHTML = "";
-        data.forEach(exam => {
-            try {
-                let row = rows.insertRow(-1);
-                let cell = row.insertCell(-1);
-                let button = document.createElement("button");
-                button.innerHTML = "<img src='./img/edit.svg' width='20px' alt='Bearbeiten'/>";
-                button.type = "button";
-                button.id = "editExam";
-                button.title = "Bearbeiten";
-                button.className = "btn btn-sm btn-outline-primary";
-                button.setAttribute("data-examuuid", exam.exam_uuid);
-                button.addEventListener("click", selectExam);
-                cell.appendChild(button);
+        if (data !== "[]") {
+            data.sort(sortExams);
 
-                if (role === "teacher") {
-                    button = document.createElement("button");
-                    button.innerHTML = "<img src='./img/email.svg' width='20px' alt='Email'/>";
+            data.forEach(exam => {
+                try {
+                    let row = rows.insertRow(-1);
+                    let cell = row.insertCell(-1);
+                    let button = document.createElement("button");
+                    button.innerHTML = "<img src='./img/edit.svg' width='20px' alt='Bearbeiten'/>";
                     button.type = "button";
-                    button.id = "sendEmail";
-                    button.title = "Email";
+                    button.id = "editExam";
+                    button.title = "Bearbeiten";
                     button.className = "btn btn-sm btn-outline-primary";
                     button.setAttribute("data-examuuid", exam.exam_uuid);
-                    button.setAttribute("data-status", exam.status);
-                    button.addEventListener("click", sendEmail);
+                    button.addEventListener("click", selectExam);
                     cell.appendChild(button);
-                    button = document.createElement("button");
-                    button.innerHTML = "<img src='./img/pdf.svg' width='20px' alt='PDF'/>";
-                    button.type = "button";
-                    button.id = "createPDF";
-                    button.title = "Drucken";
-                    button.className = "btn btn-sm btn-outline-primary";
-                    button.setAttribute("data-examuuid", exam.exam_uuid);
-                    button.addEventListener("click", createPDF);
-                    cell.appendChild(button);
+
+                    if (role === "teacher") {
+                        button = document.createElement("button");
+                        button.innerHTML = "<img src='./img/email.svg' width='20px' alt='Email'/>";
+                        button.type = "button";
+                        button.id = "sendEmail";
+                        button.title = "Email";
+                        button.className = "btn btn-sm btn-outline-primary";
+                        button.setAttribute("data-examuuid", exam.exam_uuid);
+                        button.setAttribute("data-status", exam.status);
+                        button.addEventListener("click", sendEmail);
+                        cell.appendChild(button);
+                        button = document.createElement("button");
+                        button.innerHTML = "<img src='./img/pdf.svg' width='20px' alt='PDF'/>";
+                        button.type = "button";
+                        button.id = "createPDF";
+                        button.title = "Drucken";
+                        button.className = "btn btn-sm btn-outline-primary";
+                        button.setAttribute("data-examuuid", exam.exam_uuid);
+                        button.addEventListener("click", createPDF);
+                        cell.appendChild(button);
+                    }
+
+                    cell = row.insertCell(-1);
+                    cell.innerHTML = exam.teacher.firstname + " " + exam.teacher.lastname;
+                    cell.innerHTML += "<br />" + exam.teacher.email;
+                    cell = row.insertCell(-1);
+                    cell.innerHTML = exam.student.firstname + " " + exam.student.lastname;
+                    cell.innerHTML += "<br />" + exam.student.email;
+                    cell = row.insertCell(-1);
+                    cell.innerHTML = eventList[exam.event_uuid].datetime.substring(0, 10);
+                    cell = row.insertCell(-1);
+                    cell.innerHTML = exam.status;
+                    cell = row.insertCell(-1);
+                    cell.innerHTML = exam.module + " / " + exam.exam_num;
+                    cell = row.insertCell(-1);
+                    cell.innerHTML = exam.duration;
+                } catch (error) {
+                    console.log("Error in exam with uuid: " + exam.exam_uuid);
                 }
-
-                cell = row.insertCell(-1);
-                cell.innerHTML = exam.teacher.firstname + " " + exam.teacher.lastname;
-                cell.innerHTML += "<br />" + exam.teacher.email;
-                cell = row.insertCell(-1);
-                cell.innerHTML = exam.student.firstname + " " + exam.student.lastname;
-                cell.innerHTML += "<br />" + exam.student.email;
-                cell = row.insertCell(-1);
-                cell.innerHTML = eventList[exam.event_uuid].datetime.substring(0, 10);
-                cell = row.insertCell(-1);
-                cell.innerHTML = exam.status;
-                cell = row.insertCell(-1);
-                cell.innerHTML = exam.module + " / " + exam.exam_num;
-                cell = row.insertCell(-1);
-                cell.innerHTML = exam.duration;
-            } catch (error) {
-                console.log("Error in exam with uuid: " + exam.exam_uuid);
-            }
-        });
-        showMessage("clear", "");
+            });
+            showMessage("clear", "");
+        } else {
+            showMessage("warning", "Keine Prüfungen zu diesen Suchkriterien gefunden");
+        }
     })();
 }
 
