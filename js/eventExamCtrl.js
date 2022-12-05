@@ -3,7 +3,6 @@
  */
 
 /* initialize */
-let eventList = {};
 readEventList(["dateSearch"]);
 
 /* main listener */

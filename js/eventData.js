@@ -1,7 +1,7 @@
 /**
  *  data handler for events
  */
-
+let eventList = {};
 /**
  * reads all events matching a filter
  */
@@ -33,6 +33,9 @@ function setEventList(data, elementIds) {
         }
 
         data.forEach(examEvent => {
+            key = examEvent.event_uuid;
+            eventList[key] = examEvent;
+
             let option = document.createElement("option");
             option.value = examEvent.event_uuid;
             option.text = examEvent.datetime.substring(0, 10);
