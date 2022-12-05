@@ -6,11 +6,7 @@
 let peopleDelay;
 let eventList = {};
 showMessage("info", "Lade Daten ...", 1000);
-readEventList()
-    .then(data => setEventList(data))
-    .catch(result => {
-        showMessage("danger", "Es ist ein Fehler aufgetreten");
-    });
+readEventList(["dateSearch", "event_uuid"]);
 
 /* main listener */
 document.addEventListener("DOMContentLoaded", () => {
@@ -55,17 +51,19 @@ document.addEventListener("DOMContentLoaded", () => {
  */
 function searchPeople(event) {
     clearTimeout(peopleDelay);
-    peopleDelay = setTimeout(() => {
-        let fieldname = event.target.id;
-        let filter = document.getElementById(fieldname).value;
-        if (filter.length >= 2) {
-            loadPeople(
-                filter
-            ).then(data => {
-                setPeopleList(data, fieldname);
-            });
-        }
-    }, 500);
+    if (event.keyCode < 37 || event.keyCode > 40) {
+        peopleDelay = setTimeout(() => {
+            let fieldname = event.target.id;
+            let filter = document.getElementById(fieldname).value;
+            if (filter.length >= 2) {
+                loadPeople(
+                    filter
+                ).then(data => {
+                    setPeopleList(data, fieldname);
+                });
+            }
+        }, 500);
+    }
 }
 
 /**
@@ -208,36 +206,6 @@ function showExamlist(data) {
             }
         });
         showMessage("clear", "");
-    })();
-}
-
-/**
- * saves the events as an array
- * @param data
- */
-function setEventList(data) {
-    (async () => {
-        let exists = false;
-        while (!exists) {
-            exists = document.readyState === "complete";
-            if (!exists)
-                await new Promise(resolve => setTimeout(resolve, 100));
-        }
-
-        let dateSearch = document.getElementById("dateSearch");
-        let dateEdit = document.getElementById("event_uuid");
-        data.forEach(event => {
-            key = event.event_uuid;
-            eventList[key] = event;
-
-            let option = document.createElement("option");
-            option.value = event.event_uuid;
-            option.text = event.datetime.substring(0, 10);
-            dateSearch.appendChild(option);
-            let copy = option.cloneNode(true);
-            dateEdit.appendChild(copy);
-        });
-        showMessage("clear");
     })();
 }
 

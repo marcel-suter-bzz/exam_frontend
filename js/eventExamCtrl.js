@@ -4,11 +4,7 @@
 
 /* initialize */
 let eventList = {};
-readEventList()
-    .then(data => setEventList(data))
-    .catch(result => {
-        showMessage("danger", "Es ist ein Fehler aufgetreten");
-    });
+readEventList(["dateSearch"]);
 
 /* main listener */
 document.addEventListener("DOMContentLoaded", () => {

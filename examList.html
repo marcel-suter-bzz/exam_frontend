@@ -69,7 +69,7 @@
           </th>
           <th scope="col">
             <label for="studentSearch">Lernender</label><br/>
-            <input id="studentSearch" class="form-control" type="text"/>
+            <input id="studentSearch" class="form-control" type="text" placeholder="Alle"/>
           </th>
           <th scope="col">
             <label for="dateSearch">Termin</label><br/>
@@ -112,7 +112,7 @@
       <fieldset class="row g-3 border">
         <legend>Prüfungsdetails</legend>
         <div class="row">
-          <div class="col-lg-3 col-md-6 me-0 pe-0">
+          <div class="col-lg-6 col-md-12">
             <label for="student.fullname" class="form-label">Lernender</label>
             <input type="text" required class="form-control" id="student.fullname" list="student.list"
                    autocomplete="off"/>
@@ -120,26 +120,18 @@
               <option value="">
             </datalist>
           </div>
-          <div class="col-lg-3 col-md-6 ms-0 ps-0">
-            <label for="student" class="form-label">&nbsp;</label>
-            <input tabindex="-1" class="form-control" id="student" readonly/>
-          </div>
           <div class="col-lg-6 col-md-12">
             <label for="cohort" class="form-label">Klasse</label>
             <input type="text" required class="form-control" id="cohort"/>
           </div>
 
-          <div class="col-lg-3 col-md-6 me-0 pe-0">
+          <div class="col-lg-6 col-md-12">
             <label for="teacher.fullname" class="form-label">Lehrperson</label>
             <input type="text" required class="form-control" id="teacher.fullname"
                    list="teacher.list" autocomplete="off"/>
             <datalist id="teacher.list">
               <option value="">
             </datalist>
-          </div>
-          <div class="col-lg-3 col-md-6 ms-0 ps-0">
-            <label for="teacher" class="form-label">&nbsp;</label>
-            <input tabindex="-1" class="form-control" id="teacher" readonly>
           </div>
         </div>
         <div class="row">
@@ -172,16 +164,17 @@
           <div class="col-lg-6 col-md-12">
             <label for="status" class="form-label">
               Status
-              <i class="bi bi-question-circle-fill text-info" title="Anklicken für Details"></i>
+              <i class="bi bi-question-circle-fill text-info"
+                 title="Status der Nachprüfung&#10;erhalten, erledigt oder pnab wird durch Aufsicht gesetzt"></i>
             </label>
             <select id="status" required class="form-select">
-              <option value="pendent">pendent</option>
-              <option value="offen">offen</option>
-              <option value="abgegeben">abgegeben</option>
-              <option value="erhalten" disabled>erhalten</option>
-              <option value="erledigt" disabled>erledigt</option>
-              <option value="pnab" disabled>Pnab</option>
-              <option value="geloescht">gelöscht</option>
+              <option value="pendent">pendent (Arztzeugnis ist pendent)</option>
+              <option value="offen">offen (Prüfungsunterlagen noch nicht abgegeben)</option>
+              <option value="abgegeben">abgegeben (Prüfungsunterlagen abgegeben)</option>
+              <option value="erhalten" disabled>erhalten (Aufsicht hat Prüfung erhalten)</option>
+              <option value="erledigt" disabled>erledigt (Prüfung absolviert)</option>
+              <option value="pnab" disabled>pnab (Prüfung nicht absolviert)</option>
+              <option value="geloescht">gelöscht (Eintrag gelöscht)</option>
             </select>
           </div>
           <div class="col-lg-6 col-md-12">
@@ -189,7 +182,7 @@
               Raum
               <i class="bi bi-question-circle-fill text-info" title="Wird durch Aufsicht ausgefüllt"></i>
             </label>
-            <input type="text" id="room" class="form-control" readonly />
+            <input type="text" id="room" class="form-control" readonly/>
           </div>
         </div>
         <div class="row">
@@ -211,6 +204,9 @@
         </div>
         <div class="col-lg-12">
           <div>
+
+            <input tabindex="-1" class="form-control" id="student" readonly/>
+            <input tabindex="-1" class="form-control" id="teacher" readonly>
             <input tabindex="-1" type="hidden" class="form-control" id="exam_uuid" readonly/>
           </div>
         </div>
@@ -221,7 +217,7 @@
 </main>
 <footer class="text-center text-lg-start">
   <div class="container-xxl text-info text-center p-3">
-    Exam v0.5r20221122 &copy; 2022 by Marcel Suter
+    Exam v0.6r20221122 &copy; 2022 by Marcel Suter
   </div>
 </footer>
 </body>
