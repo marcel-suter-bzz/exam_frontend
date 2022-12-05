@@ -4,7 +4,6 @@
 
 /* initialize */
 let peopleDelay;
-let eventList = {};
 showMessage("info", "Lade Daten ...", 1000);
 readEventList(["dateSearch", "event_uuid"]);
 
