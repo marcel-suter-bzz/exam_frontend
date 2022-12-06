@@ -4,7 +4,7 @@
 
 /* initialize */
 let peopleDelay;
-showMessage("info", "Lade Daten ...", 1000);
+showMessage("info", "Lade Daten ...", 1);
 readEventList(["dateSearch", "event_uuid"]);
 
 /* main listener */
@@ -111,7 +111,7 @@ function setPerson(event) {
 function searchExamlist() {
     clearTimeout(delayTimer);
     delayTimer = setTimeout(() => {
-        showMessage("info", "Lade Daten ...", 1000);
+        showMessage("info", "Lade Daten ...", 1);
         let filter = "";
         filter += "student=" + document.getElementById("studentSearch").value;
         filter += "&teacher=" + document.getElementById("teacherSearch").value;

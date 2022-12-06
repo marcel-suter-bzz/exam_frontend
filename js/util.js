@@ -102,18 +102,20 @@ async function httpFetch(
     }
 }
 
-/*
-* shows a info/warn/error-message
-* @param type  message type
-* @param message
-*/
+/**
+ * shows a info/warn/error-message
+ * @param type  message type: info, success, danger, warning
+ * @param message the message to show
+ * @param minTime  the minimum time this message should be shown in seconds
+ * @param timeout  removes the message after this time in seconds
+ */
 function showMessage(type, message = "", minTime = 0, timeout = 0) {
     const field = document.getElementById("messages");
 
     if (type === "clear") {
         if (running) {
             setTimeout(() => {
-                showMessage("clear", "&nbsp;", 250);
+                showMessage("clear", "&nbsp;", 2);
             })
         } else {
             clearTimeout(messageTimer);
@@ -127,12 +129,12 @@ function showMessage(type, message = "", minTime = 0, timeout = 0) {
         if (timeout > 0) {
             messageTimer = setTimeout(() => {
                 showMessage("clear", "&nbsp;");
-            }, timeout);
+            }, timeout*1000);
         } else if (minTime > 0) {
             running = true;
             messageTimer = setTimeout(() => {
                 running = false;
-            }, minTime);
+            }, minTime*1000);
         }
     }
 }

@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
  * search people with delay upon input
  */
 function searchExamlist() {
+    showMessage("info", "wird geladen", 2);
     const select = document.getElementById("dateSearch");
     let filter = "&date=" + select.value;
     const option = select.options[select.selectedIndex];
@@ -116,14 +117,19 @@ function showExamlist(data, locked) {
     })();
 }
 
+/**
+ * saves changes to an exam
+ * @param event
+ */
 function changeExam(event) {
+    showMessage("info", "wird gespeichert", 2);
     let examUUID = event.target.getAttribute('data-examUUID');
     let data = new URLSearchParams();
     data.set('exam_uuid', examUUID);
     let fieldname = event.target.name;
     data.set(fieldname, event.target.value);
     saveExam(data);
-
+    showMessage("clear", "");
 }
 
 /**
@@ -161,7 +167,7 @@ function sortExams(examA, examB) {
  * @param event
  */
 function sendAllEmail(event) {
-    showMessage("info", "Sende Emails ...", 1000);
+    showMessage("info", "Sende Emails ...", 2);
     let data = new URLSearchParams();
     const boxes = document.querySelectorAll("input:checked");
     if (boxes.length > 0) {
@@ -196,7 +202,7 @@ function sendAllEmail(event) {
  * @param event
  */
 function createAllPDF(event) {
-    showMessage("info", "PDF wird erstellt ...", 1000);
+    showMessage("info", "PDF wird erstellt ...", 2);
     let data = new URLSearchParams();
     const boxes = document.querySelectorAll("input:checked");
     if (boxes.length > 0) {
