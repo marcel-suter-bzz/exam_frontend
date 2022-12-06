@@ -26,6 +26,9 @@ function searchExamlist() {
     let filter = "&date=" + select.value;
     const option = select.options[select.selectedIndex];
     let locked = option.getAttribute("data-locked");
+    document.getElementById("email").innerText = option.getAttribute("data-supervisor")
+    document.getElementById("sendEmail").disabled = locked === "true";
+    document.getElementById("createPDF").disabled = locked === "true";
     readExamlist(filter).then(data => {
         showExamlist(data, locked === "true");
     }).catch(result => {
@@ -45,11 +48,11 @@ function showExamlist(data, locked) {
             exists = document.readyState === "complete" && Object.keys(eventList).length !== 0;
             if (!exists) await new Promise(resolve => setTimeout(resolve, 100));
         }
+        let rows = document.getElementById("examlist")
+            .getElementsByTagName("tbody")[0];
+        rows.innerHTML = "";
         if (data !== "[]") {
             data.sort(sortExams);
-            let rows = document.getElementById("examlist")
-                .getElementsByTagName("tbody")[0];
-            rows.innerHTML = "";
             let prevEmail = "";
             let count = 0;
             data.forEach(exam => {
@@ -137,35 +140,6 @@ function addOptions(field) {
     })
 }
 
-/**
- * saves the events as an array
- * @param data
- */
-function setEventList(data) {
-    (async () => {
-        let exists = false;
-        while (!exists) {
-            exists = document.readyState === "complete";
-            if (!exists) await new Promise(resolve => setTimeout(resolve, 100));
-        }
-
-        let dateSearch = document.getElementById("dateSearch");
-        data.forEach(event => {
-            key = event.event_uuid;
-            eventList[key] = event;
-
-            let option = document.createElement("option");
-            option.value = event.event_uuid;
-            option.text = event.datetime;
-            let locked = "true";
-            event.supervisors.forEach(supervisor => {
-                if (supervisor === user) locked = "false";
-            });
-            option.setAttribute("data-locked", locked);
-            dateSearch.appendChild(option);
-        });
-    })();
-}
 
 /**
  * compares to exams

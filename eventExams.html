@@ -60,19 +60,26 @@
       <table id="examlist" class="table table-striped">
         <thead class="table-info">
         <tr>
-          <th scope="col">&nbsp;</th>
-          <th scope="col" colspan="2">
+          <th scope="col" colspan="3">
             <select id="dateSearch" data-edit="all" class="form-select">
               <option value="">Auswählen ...</option>
             </select>
           </th>
-          <th scope="col" colspan="6">
-            <button type="button" id="sendEmail" class="btn-primary" title="Aufgebot an Lernende per Email senden">
+          <th scope="col">
+            <button type="button" id="sendEmail" class="btn btn-primary" title="Aufgebot an Lernende per Email senden">
               <img src="./img/email2.svg" width='20px' alt="Aufgebot senden"/>Aufgebot senden
             </button>
-            <button type="button" id="createPDF" class="btn-primary" title="Datenblätter als PDF">&#128438;
+            </th>
+          <th scope="col">
+            <button type="button" id="createPDF" class="btn btn-primary" title="Datenblätter als PDF">&#128438;
               Datenblätter
             </button>
+          </th>
+          <th scope="col">
+            Aufsicht
+          </th>
+          <th scope="col" colspan="3">
+            <span class="form-label" id="email"></span>
           </th>
         </tr>
         <tr>

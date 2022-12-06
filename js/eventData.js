@@ -39,6 +39,12 @@ function setEventList(data, elementIds) {
             let option = document.createElement("option");
             option.value = examEvent.event_uuid;
             option.text = examEvent.datetime.substring(0, 10);
+            option.setAttribute("data-supervisor", examEvent.supervisors[0]);
+            let locked = "true";
+            examEvent.supervisors.forEach(supervisor => {
+                if (supervisor === user) locked = "false";
+            });
+            option.setAttribute("data-locked", locked);
             for (let key in targets) {
                 let copy = option.cloneNode(true);
                 targets[key].appendChild(copy);
