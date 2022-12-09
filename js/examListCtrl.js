@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("teacher.fullname").addEventListener("change", setPerson);
 
         document.getElementById("examadd").addEventListener("click", function () {
-            resetForm();
+            document.getElementById("editform").reset();
             document.getElementById("editform").classList.remove("d-none");
             document.getElementById("list").classList.add("d-none");
             searchExamlist();
@@ -316,6 +316,7 @@ function submitExam(event) {
  */
 function resetForm() {
     document.getElementById("editform").classList.add("d-none");
+    document.getElementById("editform").reset();
     document.getElementById("list").classList.remove("d-none");
     document.getElementById("exam_uuid").value = ""
     document.getElementById("teacher").value = ""
