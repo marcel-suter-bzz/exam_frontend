@@ -81,7 +81,10 @@ function setPeopleList(data, fieldname) {
     datalist.innerHTML = "";
     data.forEach(person => {
         let option = document.createElement("option");
-        option.value = person.fullname + " (" + person.email + ")";
+        option.value = person.fullname;
+        if (fieldname === "student.fullname")  {
+            option.value += " (" + person.department + ")";
+        }
         option.setAttribute("data-email", person.email);
         datalist.appendChild(option);
     });
@@ -304,14 +307,14 @@ function submitExam(event) {
         saveExam(
             data
         ).then(function () {
-            /*const button = event.submitter.id;
+            const button = event.submitter.id;
             if (button == "sendexam") {
-                const uuid = examForm.getElementById('exam_uuid').value;
-                const status = examForm.getElementById('status').value;
+                const uuid = document.getElementById('exam_uuid').value;
+                const status = document.getElementById('status').value;
                 sendRequest(
                     API_URL + "/email/" + uuid + "/" + status
                 ).then(showMessage("info", "Email gesendet"));
-            }*/
+            }
             document.getElementById("editform").classList.add("d-none");
             document.getElementById("list").classList.remove("d-none");
             searchExamlist();
