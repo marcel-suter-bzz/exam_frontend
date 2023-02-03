@@ -112,7 +112,7 @@
       <fieldset class="row g-3 border">
         <legend>Prüfungsdetails</legend>
         <div class="row">
-          <div class="col-lg-6 col-md-12">
+          <div class="col-xxl-4 col-lg-6 col-md-12">
             <label for="student.fullname" class="form-label">Lernender</label>
             <input type="text" required class="form-control" id="student.fullname" list="student.list"
                    autocomplete="off"/>
@@ -120,12 +120,17 @@
               <option value="">
             </datalist>
           </div>
-          <div class="col-lg-6 col-md-12">
+          <div class="col-xxl-4 col-lg-6 col-md-12">
+            <label for="student" class="form-label">Email</label>
+            <input class="form-control" id="student" required/>
+          </div>
+          <div class="col-xxl-4 col-lg-6 col-md-12">
             <label for="cohort" class="form-label">Klasse</label>
             <input type="text" required class="form-control" id="cohort"/>
           </div>
-
-          <div class="col-lg-6 col-md-12">
+        </div>
+        <div class="row">
+          <div class="col-xxl-4 col-lg-6 col-md-12">
             <label for="teacher.fullname" class="form-label">Lehrperson</label>
             <input type="text" required class="form-control" id="teacher.fullname"
                    list="teacher.list" autocomplete="off"/>
@@ -133,35 +138,39 @@
               <option value="">
             </datalist>
           </div>
+          <div class="col-xxl-4 col-lg-6 col-md-12">
+            <label for="teacher" class="form-label">Email</label>
+            <input class="form-control" id="teacher" required>
+          </div>
         </div>
         <div class="row">
-          <div class="col-lg-6 col-md-12">
+          <div class="col-xxl-4 col-lg-6 col-md-12">
             <label for="module" class="form-label">Fach/Modul</label>
             <input type="text" required class="form-control" id="module"/>
           </div>
-          <div class="col-lg-6 col-md-12">
+          <div class="col-xxl-4 col-lg-6 col-md-12">
             <label for="exam_num" class="form-label">Prüfung</label>
             <input type="text" class="form-control" id="exam_num"/>
           </div>
-          <div class="col-lg-6 col-md-12">
+          <div class="col-xxl-4 col-lg-6 col-md-12">
             <label for="missed" class="form-label">
               Prüfungsdatum
               <i class="bi bi-question-circle-fill text-info" title="Datum der verpassten Prüfung"></i>
             </label>
             <input type="date" required class="form-control" id="missed"/>
           </div>
-          <div class="col-lg-6 col-md-12">
+          <div class="col-xxl-4 col-lg-6 col-md-12">
             <label for="duration" class="form-label">Dauer</label>
             <input type="number" required class="form-control" id="duration"/>
           </div>
         </div>
         <div class="row">
-          <div class="col-lg-6 col-md-12">
+          <div class="col-xxl-4 col-lg-6 col-md-12">
             <label for="event_uuid" class="form-label">Nachprüfungstermin</label>
             <select required class="form-select" id="event_uuid"></select>
           </div>
 
-          <div class="col-lg-6 col-md-12">
+          <div class="col-xxl-4 col-lg-6 col-md-12">
             <label for="status" class="form-label">
               Status
               <i class="bi bi-question-circle-fill text-info"
@@ -177,7 +186,7 @@
               <option value="geloescht">gelöscht (Eintrag gelöscht)</option>
             </select>
           </div>
-          <div class="col-lg-6 col-md-12">
+          <div class="col-xxl-4 col-lg-6 col-md-12">
             <label for="room" class="form-label">
               Raum
               <i class="bi bi-question-circle-fill text-info" title="Wird durch Aufsicht ausgefüllt"></i>
@@ -205,8 +214,7 @@
         <div class="col-lg-12">
           <div>
 
-            <input tabindex="-1" class="form-control" id="student" readonly/>
-            <input tabindex="-1" class="form-control" id="teacher" readonly>
+
             <input tabindex="-1" type="hidden" class="form-control" id="exam_uuid" readonly/>
           </div>
         </div>

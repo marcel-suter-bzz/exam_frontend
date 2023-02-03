@@ -33,10 +33,12 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("teacher.fullname").addEventListener("change", setPerson);
 
         document.getElementById("examadd").addEventListener("click", function () {
-            document.getElementById("editform").reset();
-            document.getElementById("editform").classList.remove("d-none");
+            const editForm = document.getElementById("editform");
+            editForm.reset();
+            document.getElementById("exam_uuid").value = create_UUID();
+            editForm.classList.remove("d-none");
             document.getElementById("list").classList.add("d-none");
-            searchExamlist();
+            //searchExamlist();
         });
     }
 
@@ -302,6 +304,14 @@ function submitExam(event) {
         saveExam(
             data
         ).then(function () {
+            /*const button = event.submitter.id;
+            if (button == "sendexam") {
+                const uuid = examForm.getElementById('exam_uuid').value;
+                const status = examForm.getElementById('status').value;
+                sendRequest(
+                    API_URL + "/email/" + uuid + "/" + status
+                ).then(showMessage("info", "Email gesendet"));
+            }*/
             document.getElementById("editform").classList.add("d-none");
             document.getElementById("list").classList.remove("d-none");
             searchExamlist();
@@ -344,11 +354,11 @@ function sendEmail(event) {
  */
 function createPDF(event) {
     const uuid = getExamUUID(event)
-    sendRequest(API_URL + "/print/" + uuid, "GET",null, "blob")
+    sendRequest(API_URL + "/print/" + uuid, "GET", null, "blob")
         .then((blob) => { // RETRIEVE THE BLOB AND CREATE LOCAL URL
-          var _url = window.URL.createObjectURL(blob);
-          window.open(_url, "_blank").focus(); // window.open + focus
-      }).catch((err) => {
+            var _url = window.URL.createObjectURL(blob);
+            window.open(_url, "_blank").focus(); // window.open + focus
+        }).catch((err) => {
         console.log(err);
-      });
+    });
 }
