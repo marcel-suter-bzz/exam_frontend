@@ -26,12 +26,12 @@ function searchExamlist() {
     const select = document.getElementById("dateSearch");
     let filter = "&date=" + select.value;
     const option = select.options[select.selectedIndex];
-    let locked = option.getAttribute("data-locked");
+    let locked = option.getAttribute("data-locked") === "true";
     document.getElementById("email").innerText = option.getAttribute("data-supervisor")
-    document.getElementById("sendEmail").disabled = locked === "true";
-    document.getElementById("createPDF").disabled = locked === "true";
+    document.getElementById("sendEmail").disabled = locked;
+    document.getElementById("createPDF").disabled = locked;
     readExamlist(filter).then(data => {
-        showExamlist(data, locked === "true");
+        showExamlist(data, locked);
     }).catch(result => {
 
     });
