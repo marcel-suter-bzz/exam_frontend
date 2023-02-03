@@ -34,7 +34,7 @@ async function sendRequest(url, method = "GET", bodyData = null, type = "json") 
             let result = await httpFetch(url, method, bodyData, "access", type);
             return Promise.resolve(result);
         } catch (err) {
-            console.log(err);
+            console.log("sendRequest: " + err);
             reason = err;
         }
     }

@@ -316,7 +316,7 @@ function submitExam(event) {
             document.getElementById("list").classList.remove("d-none");
             searchExamlist();
         }).catch(result => {
-
+            console.log(result)
         });
     }
 }
@@ -354,11 +354,11 @@ function sendEmail(event) {
  */
 function createPDF(event) {
     const uuid = getExamUUID(event)
-    sendRequest(API_URL + "/print/" + uuid, "GET", null, "blob")
-        .then((blob) => { // RETRIEVE THE BLOB AND CREATE LOCAL URL
-            var _url = window.URL.createObjectURL(blob);
-            window.open(_url, "_blank").focus(); // window.open + focus
-        }).catch((err) => {
+    sendRequest(API_URL + "/print/" + uuid, "GET",null, "blob")
+        .then((blob) => {
+          const _url = window.URL.createObjectURL(blob);
+          window.open(_url, "_blank").focus();
+      }).catch((err) => {
         console.log(err);
-    });
+      });
 }

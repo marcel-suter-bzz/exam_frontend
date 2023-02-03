@@ -44,12 +44,6 @@ footer .text-center {
     margin-bottom: 0.2rem;
 }
 
-.table-fixed {
-    max-height: 600px;
-    display: block;
-    overflow: auto;
-}
-
 .table thead {
     position: sticky;
     position: -webkit-sticky;

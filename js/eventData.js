@@ -66,7 +66,7 @@ function sortEventList(eventArray) {
     let future = [];
     let past = [];
     eventArray.forEach(examEvent => {
-        diff = new Date(examEvent.datetime) - new Date();
+        let diff = new Date(examEvent.datetime) - new Date();
         examEvent.diff = diff;
         if (diff < 0) past.push(examEvent);
         else future.push(examEvent);
