@@ -319,6 +319,11 @@ function submitExam(event) {
             document.getElementById("list").classList.remove("d-none");
             searchExamlist();
         }).catch(result => {
+            if (result == "400") {
+                showMessage("danger", "Daten ungültig oder unvollständig")
+            } else {
+                showMessage("danger", "Allgemeiner Fehler beim Speichern")
+            }
             console.log(result)
         });
     }
