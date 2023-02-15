@@ -5,6 +5,16 @@
 
 const user = readStorage("email");
 const role = readStorage("role");
+const statusIcon = {
+    "pendent": "&#9888 ",
+    "offen": "&#9888 ",
+    "abgegeben": "&#9888 ",
+    "erhalten": "&#9888 ",
+    "abgeschlossen": "&#9989 ",
+    "pnab": "&#9888 ",
+    "geloescht": "&#10060 "
+}
+
 let delayTimer;
 let messageTimer;
 let running = false;
@@ -129,12 +139,12 @@ function showMessage(type, message = "", minTime = 0, timeout = 0) {
         if (timeout > 0) {
             messageTimer = setTimeout(() => {
                 showMessage("clear", "&nbsp;");
-            }, timeout*1000);
+            }, timeout * 1000);
         } else if (minTime > 0) {
             running = true;
             messageTimer = setTimeout(() => {
                 running = false;
-            }, minTime*1000);
+            }, minTime * 1000);
         }
     }
 }
@@ -202,4 +212,28 @@ function getStatus(event) {
         targetElement = targetElement.parentNode;
     }
     return targetElement.getAttribute("data-status");
+}
+
+/**
+ * creates a uuid v4
+ * @returns {string}
+ */
+function create_UUID() {
+    var dt = new Date().getTime();
+    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        var r = (dt + Math.random() * 16) % 16 | 0;
+        dt = Math.floor(dt / 16);
+        return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+    return uuid;
+}
+
+function addTextCell(row, text) {
+    /**
+     * adds a cell to a table row
+     * @param row  a row-object
+     * @param text the innerHtml-text
+     */
+    let cell = row.insertCell(-1);
+    cell.innerHTML = text;
 }

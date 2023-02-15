@@ -48,7 +48,6 @@
         </li>
       </ul>
     </div>
-
   </div>
 </nav>
 <main class="container-xxl">
@@ -58,11 +57,11 @@
   <div id="list" class="col-12">
     <form id="filterForm">
       <table id="examlist" class="table table-striped">
-        <thead class="table-info">
-        <tr id="searchForm">
-          <th scope="col">
-            &nbsp;<br/>Suchen
-          </th>
+        <thead>
+        <tr class="table-info">
+          <th colspan="7"><h5>Suche</h5></th>
+        </tr>
+        <tr id="searchForm" class="table-info">
           <th scope="col">
             <label for="teacherSearch">Lehrperson</label><br/>
             <input id="teacherSearch" class="form-control" type="text" placeholder="Alle"/>
@@ -78,18 +77,12 @@
             </select>
           </th>
           <th scope="col">
-            Status<br/>
-            <div id="statusSearch" class="form-check">
-              <input type="checkbox" data-edit="all" class="form-check-input" id="open" checked/>
-              <label class="form-check-label" for="open">
-                Offen
-              </label>
-              <br/>
-              <input type="checkbox" data-edit="all" class="form-check-input" id="closed"/>
-              <label class="form-check-label" for="closed">
-                Abgeschlossen
-              </label>
-            </div>
+            <label for="statusSearch">Status</label>
+            <select id="statusSearch" class="form-select" data-edit="all" type="text">
+              <option value="open">Offen</option>
+              <option value="closed">Abgeschlossen</option>
+              <option value="all">Alle</option>
+            </select>
           </th>
           <th scope="col">
             Fach / Prüfung
@@ -97,14 +90,22 @@
           <th scope="col">
             Dauer
           </th>
+          <th>
+            <button class="btn btn-primary" type="button" id="search" name="search">Suchen</button>
+          </th>
+        </tr>
+        <tr>
+          <th colspan="7">
+            <button class="btn btn-primary" type="button" id="examadd" name="examadd">+ Neue Nachprüfung</button>
+          </th>
+        </tr>
+        <tr>
+          <th colspan="7"><h5>Ergebnisse</h5></th>
         </tr>
         </thead>
         <tbody id="listBody">
         </tbody>
       </table>
-      <div class="row col-1">
-        <button class="btn btn-primary" type="button" id="examadd" name="examadd">Neu</button>
-      </div>
     </form>
   </div>
   <div id="examedit" class="container-xxl py-3">
@@ -209,7 +210,6 @@
         </div>
         <div class="col-lg-12">
           <div>
-
             <input tabindex="-1" class="form-control" id="student" readonly/>
             <input tabindex="-1" class="form-control" id="teacher" readonly>
             <input tabindex="-1" type="hidden" class="form-control" id="exam_uuid" readonly/>
@@ -218,7 +218,6 @@
       </fieldset>
     </form>
   </div>
-
 </main>
 <footer class="text-center text-lg-start">
   <div class="container-xxl text-info text-center p-3">
