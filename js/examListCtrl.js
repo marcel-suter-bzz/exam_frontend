@@ -121,14 +121,7 @@ function searchExamlist() {
         filter += "student=" + document.getElementById("studentSearch").value;
         filter += "&teacher=" + document.getElementById("teacherSearch").value;
         filter += "&date=" + document.getElementById("dateSearch").value;
-
-        let status = "none";
-        const open = document.getElementById("open").checked;
-        const closed = document.getElementById("closed").checked;
-        if (open && closed) status = "all";
-        else if (open) status = "open";
-        else if (closed) status = "closed";
-        filter += "&status=" + status;
+        filter += "&status=" + document.getElementById("statusSearch").value;
 
         readExamlist(
             filter
@@ -162,7 +155,14 @@ function showExamlist(data) {
             data.forEach(exam => {
                 try {
                     let row = rows.insertRow(-1);
-                    let cell = row.insertCell(-1);
+                    addTextCell(row, exam.teacher.firstname + " " + exam.teacher.lastname + "<br />" + exam.teacher.email);
+                    addTextCell(row,  exam.student.firstname + " " + exam.student.lastname + "<br />" + exam.student.email);
+                    addTextCell(row, eventList[exam.event_uuid].datetime.substring(0, 10));
+                    addTextCell(row, statusData[exam.status].icon + statusData[exam.status].text);
+                    addTextCell(row, exam.module + " / " + exam.exam_num);
+                    addTextCell(row, exam.duration);
+
+                    cell = row.insertCell(-1);
                     let button = document.createElement("button");
                     button.innerHTML = "<img src='./img/edit.svg' width='20px' alt='Bearbeiten'/>";
                     button.type = "button";
@@ -195,20 +195,6 @@ function showExamlist(data) {
                         cell.appendChild(button);
                     }
 
-                    cell = row.insertCell(-1);
-                    cell.innerHTML = exam.teacher.firstname + " " + exam.teacher.lastname;
-                    cell.innerHTML += "<br />" + exam.teacher.email;
-                    cell = row.insertCell(-1);
-                    cell.innerHTML = exam.student.firstname + " " + exam.student.lastname;
-                    cell.innerHTML += "<br />" + exam.student.email;
-                    cell = row.insertCell(-1);
-                    cell.innerHTML = eventList[exam.event_uuid].datetime.substring(0, 10);
-                    cell = row.insertCell(-1);
-                    cell.innerHTML = exam.status;
-                    cell = row.insertCell(-1);
-                    cell.innerHTML = exam.module + " / " + exam.exam_num;
-                    cell = row.insertCell(-1);
-                    cell.innerHTML = exam.duration;
                 } catch (error) {
                     console.log("Error in exam with uuid: " + exam.exam_uuid);
                 }

@@ -23,10 +23,12 @@ footer .text-center {
 }
 
 #popup {
-    position: absolute;
-    min-height: 50px;
-    bottom: 50px;
+    position: fixed;
     pointer-events: none;
+    top: 50%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
     z-index: 99;
 }
 

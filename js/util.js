@@ -5,6 +5,16 @@
 
 const user = readStorage("email");
 const role = readStorage("role");
+const statusData = {
+    "10": {"text": "pendent", "icon": "<span class='font-weight-bolder text-danger'>&#9888; </span>"},
+    "20": {"text": "offen", "icon": "<span class='font-weight-bold text-warning'>&#9888; </span>"},
+    "30": {"text": "abgegeben", "icon": "<span class='font-weight-bold text-danger'>&#9888; </span>"},
+    "40": {"text": "erhalten", "icon": "<span class='font-weight-bold text-danger'>&#9888 </span>"},
+    "50": {"text": "absolviert", "icon": "<span class='font-weight-bold text-danger'>&#9888 </span>"},
+    "80": {"text": "pnab", "icon": "<span class='font-weight-bold text-danger'>&#9888 </span>"},
+    "90": {"text": "gelöscht", "icon": "<span class='font-weight-bold text-danger'>&#10060; </span>"}
+}
+
 let delayTimer;
 let messageTimer;
 let running = false;
@@ -129,12 +139,12 @@ function showMessage(type, message = "", minTime = 0, timeout = 0) {
         if (timeout > 0) {
             messageTimer = setTimeout(() => {
                 showMessage("clear", "&nbsp;");
-            }, timeout*1000);
+            }, timeout * 1000);
         } else if (minTime > 0) {
             running = true;
             messageTimer = setTimeout(() => {
                 running = false;
-            }, minTime*1000);
+            }, minTime * 1000);
         }
     }
 }
@@ -208,12 +218,22 @@ function getStatus(event) {
  * creates a uuid v4
  * @returns {string}
  */
-function create_UUID(){
+function create_UUID() {
     var dt = new Date().getTime();
-    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        var r = (dt + Math.random()*16)%16 | 0;
-        dt = Math.floor(dt/16);
-        return (c=='x' ? r :(r&0x3|0x8)).toString(16);
+    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        var r = (dt + Math.random() * 16) % 16 | 0;
+        dt = Math.floor(dt / 16);
+        return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
     });
     return uuid;
+}
+
+function addTextCell(row, text) {
+    /**
+     * adds a cell to a table row
+     * @param row  a row-object
+     * @param text the innerHtml-text
+     */
+    let cell = row.insertCell(-1);
+    cell.innerHTML = text;
 }

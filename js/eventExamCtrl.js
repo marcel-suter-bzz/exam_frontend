@@ -137,13 +137,12 @@ function changeExam(event) {
  * @param field  id of the element
  */
 function addOptions(field) {
-    let values = ["pendent", "offen", "abgegeben", "erhalten", "erledigt", "pnab", "geloescht"];
-    values.forEach(element => {
+    for (const [key, value] of Object.entries(statusData)) {
         let option = document.createElement("option");
-        option.value = element;
-        option.innerHTML = element;
+        option.value = key;
+        option.innerHTML = value.text;
         field.appendChild(option);
-    })
+    }
 }
 
 
