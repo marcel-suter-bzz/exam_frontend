@@ -18,9 +18,10 @@ document.addEventListener("DOMContentLoaded", () => {
         lockForm("filterForm", true);
     } else {
         document.getElementById("teacherSearch").value = user;
-        document.getElementById("studentSearch").addEventListener("keyup", searchExamlist);
+        document.getElementById("filterForm").addEventListener("submit", searchExamlist);
+        /*document.getElementById("studentSearch").addEventListener("keyup", searchExamlist);
         document.getElementById("teacherSearch").addEventListener("keyup", searchExamlist);
-        document.getElementById("dateSearch").addEventListener("change", searchExamlist);
+        document.getElementById("dateSearch").addEventListener("change", searchExamlist);*/
 
         document.getElementById("examadd").hidden = false;
         lockForm("editform", false);
@@ -82,7 +83,7 @@ function setPeopleList(data, fieldname) {
     data.forEach(person => {
         let option = document.createElement("option");
         option.value = person.fullname;
-        if (fieldname === "student.fullname")  {
+        if (fieldname === "student.fullname") {
             option.value += " (" + person.department + ")";
         }
         option.setAttribute("data-email", person.email);
@@ -112,25 +113,25 @@ function setPerson(event) {
 
 /**
  * search people with delay upon input
+ * @param event
  */
-function searchExamlist() {
-    clearTimeout(delayTimer);
-    delayTimer = setTimeout(() => {
-        showMessage("info", "Lade Daten ...", 1);
-        let filter = "";
-        filter += "student=" + document.getElementById("studentSearch").value;
-        filter += "&teacher=" + document.getElementById("teacherSearch").value;
-        filter += "&date=" + document.getElementById("dateSearch").value;
-        filter += "&status=" + document.getElementById("statusSearch").value;
+function searchExamlist(event) {
+    if (event)   event.preventDefault();
+    showMessage("info", "Lade Daten ...", 1);
+    let filter = "";
+    filter += "student=" + document.getElementById("studentSearch").value;
+    filter += "&teacher=" + document.getElementById("teacherSearch").value;
+    filter += "&date=" + document.getElementById("dateSearch").value;
+    filter += "&status=" + document.getElementById("statusSearch").value;
 
-        readExamlist(
-            filter
-        ).then(data => {
-            showExamlist(data);
-        }).catch(result => {
-            console.log(result);
-        });
-    }, 500);
+    readExamlist(
+        filter
+    ).then(data => {
+        showExamlist(data);
+    }).catch(result => {
+        console.log(result);
+    });
+
 }
 
 /**
@@ -156,40 +157,40 @@ function showExamlist(data) {
                 try {
                     let row = rows.insertRow(-1);
                     addTextCell(row, exam.teacher.firstname + " " + exam.teacher.lastname + "<br />" + exam.teacher.email);
-                    addTextCell(row,  exam.student.firstname + " " + exam.student.lastname + "<br />" + exam.student.email);
+                    addTextCell(row, exam.student.firstname + " " + exam.student.lastname + "<br />" + exam.student.email);
                     addTextCell(row, eventList[exam.event_uuid].datetime.substring(0, 10));
                     addTextCell(row, statusData[exam.status].icon + statusData[exam.status].text);
                     addTextCell(row, exam.module + " / " + exam.exam_num);
                     addTextCell(row, exam.duration);
 
-                    cell = row.insertCell(-1);
+                    let cell = row.insertCell(-1);
                     let button = document.createElement("button");
-                    button.innerHTML = "<img src='./img/edit.svg' width='20px' alt='Bearbeiten'/>";
+                    button.innerHTML = "<span class='text-light'><i class='bi bi-pencil'></i></span>";
                     button.type = "button";
                     button.id = "editExam";
                     button.title = "Bearbeiten";
-                    button.className = "btn btn-sm btn-outline-primary";
+                    button.className = "btn btn-sm btn-primary ms-1";
                     button.setAttribute("data-examuuid", exam.exam_uuid);
                     button.addEventListener("click", selectExam);
                     cell.appendChild(button);
 
                     if (role === "teacher") {
                         button = document.createElement("button");
-                        button.innerHTML = "<img src='./img/email.svg' width='20px' alt='Email'/>";
+                        button.innerHTML = "<span class='text-light'><i class='bi bi-at'></i></span>";
                         button.type = "button";
                         button.id = "sendEmail";
                         button.title = "Email";
-                        button.className = "btn btn-sm btn-outline-primary";
+                        button.className = "btn btn-sm btn-primary ms-1";
                         button.setAttribute("data-examuuid", exam.exam_uuid);
                         button.setAttribute("data-status", exam.status);
                         button.addEventListener("click", sendEmail);
                         cell.appendChild(button);
                         button = document.createElement("button");
-                        button.innerHTML = "<img src='./img/pdf.svg' width='20px' alt='PDF'/>";
+                        button.innerHTML = "<span class='text-light'><i class='bi bi-file-earmark-pdf'></i></span>";
                         button.type = "button";
                         button.id = "createPDF";
                         button.title = "Drucken";
-                        button.className = "btn btn-sm btn-outline-primary";
+                        button.className = "btn btn-sm btn-primary ms-1";
                         button.setAttribute("data-examuuid", exam.exam_uuid);
                         button.addEventListener("click", createPDF);
                         cell.appendChild(button);
@@ -348,11 +349,11 @@ function sendEmail(event) {
  */
 function createPDF(event) {
     const uuid = getExamUUID(event)
-    sendRequest(API_URL + "/print/" + uuid, "GET",null, "blob")
+    sendRequest(API_URL + "/print/" + uuid, "GET", null, "blob")
         .then((blob) => {
-          const _url = window.URL.createObjectURL(blob);
-          window.open(_url, "_blank").focus();
-      }).catch((err) => {
+            const _url = window.URL.createObjectURL(blob);
+            window.open(_url, "_blank").focus();
+        }).catch((err) => {
         console.log(err);
-      });
+    });
 }

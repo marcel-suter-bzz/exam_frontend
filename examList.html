@@ -55,56 +55,55 @@
     <div id="messages" class="alert" role="alert"></div>
   </div>
   <div id="list" class="col-12">
-    <form id="filterForm">
-      <table id="examlist" class="table table-striped">
-        <thead>
-        <tr class="table-info">
-          <th colspan="4"><h5>Suche</h5></th>
-          <th colspan="3" class="text-end">
-            <button class="btn btn-primary" type="button" id="examadd" name="examadd">+ Neue Nachprüfung</button>
-          </th>
-        </tr>
-        <tr id="searchForm" class="table-info">
-          <th scope="col">
-            <label for="teacherSearch">Lehrperson</label><br/>
-            <input id="teacherSearch" class="form-control" type="text" placeholder="Alle"/>
-          </th>
-          <th scope="col">
-            <label for="studentSearch">Lernender</label><br/>
-            <input id="studentSearch" class="form-control" type="text" placeholder="Alle"/>
-          </th>
-          <th scope="col">
-            <label for="dateSearch">Termin</label><br/>
-            <select id="dateSearch" class="form-select" data-edit="all" type="text">
-              <option value="all">Alle</option>
-            </select>
-          </th>
-          <th scope="col">
-            <label for="statusSearch">Status</label>
-            <select id="statusSearch" class="form-select" data-edit="all" type="text">
-              <option value="open">Offen</option>
-              <option value="closed">Abgeschlossen</option>
-              <option value="all">Alle</option>
-            </select>
-          </th>
-          <th scope="col">
-            Fach / Prüfung
-          </th>
-          <th scope="col">
-            Dauer
-          </th>
-          <th class="text-end">
-            <button class="btn btn-primary" type="button" id="search" name="search">Suchen</button>
-          </th>
-        </tr>
-        <tr>
-          <th colspan="7"><h5>Ergebnisse</h5></th>
-        </tr>
-        </thead>
-        <tbody id="listBody">
-        </tbody>
-      </table>
-    </form>
+    <form id="filterForm" method="get"></form>
+    <table id="examlist" class="table table-striped">
+      <thead>
+      <tr class="table-info">
+        <th colspan="4"><h5>Suche</h5></th>
+        <th colspan="3" class="text-end">
+          <button class="btn btn-primary" type="button" id="examadd" name="examadd">+ Neue Nachprüfung</button>
+        </th>
+      </tr>
+      <tr id="searchForm" class="table-info">
+        <th scope="col">
+          <label for="teacherSearch">Lehrperson</label><br/>
+          <input id="teacherSearch" class="form-control" type="text" placeholder="Alle" form="filterForm"/>
+        </th>
+        <th scope="col">
+          <label for="studentSearch">Lernender</label><br/>
+          <input id="studentSearch" class="form-control" type="text" placeholder="Alle" form="filterForm"/>
+        </th>
+        <th scope="col">
+          <label for="dateSearch">Termin</label><br/>
+          <select id="dateSearch" class="form-select" data-edit="all" type="text" form="filterForm">
+            <option value="all">Alle</option>
+          </select>
+        </th>
+        <th scope="col">
+          <label for="statusSearch">Status</label>
+          <select id="statusSearch" class="form-select" data-edit="all" type="text" form="filterForm">
+            <option value="open">Offen</option>
+            <option value="closed">Abgeschlossen</option>
+            <option value="all">Alle</option>
+          </select>
+        </th>
+        <th scope="col">
+          Fach / Prüfung
+        </th>
+        <th scope="col">
+          Dauer
+        </th>
+        <th class="text-end">
+          <button class="btn btn-primary" type="submit" id="search" name="search" form="filterForm">Suchen</button>
+        </th>
+      </tr>
+      <tr>
+        <th colspan="7"><h5>Ergebnisse</h5></th>
+      </tr>
+      </thead>
+      <tbody id="listBody">
+      </tbody>
+    </table>
   </div>
   <div id="examedit" class="container-xxl py-3">
     <form id="editform" class="d-none">
@@ -117,7 +116,7 @@
               <i class="bi bi-question-circle-fill text-info" title="Wähle den Lernenden"></i>
             </label>
             <input type="text" required class="form-control" id="student.fullname" list="student.list"
-                   autocomplete="off" />
+                   autocomplete="off"/>
             <datalist id="student.list">
               <option value="">
             </datalist>
@@ -138,7 +137,7 @@
               <i class="bi bi-question-circle-fill text-info" title="Wähle die Fachlehrperson"></i>
             </label>
             <input type="text" required class="form-control" id="teacher.fullname"
-                   list="teacher.list" autocomplete="off" />
+                   list="teacher.list" autocomplete="off"/>
             <datalist id="teacher.list">
               <option value="">
             </datalist>
@@ -218,8 +217,6 @@
         </div>
         <div class="col-lg-12">
           <div>
-            <input tabindex="-1" class="form-control" id="student" readonly/>
-            <input tabindex="-1" class="form-control" id="teacher" readonly>
             <input tabindex="-1" type="hidden" class="form-control" id="exam_uuid" readonly/>
           </div>
         </div>

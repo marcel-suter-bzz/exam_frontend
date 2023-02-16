@@ -19,7 +19,7 @@ footer {
 
 footer .text-center {
     color: var(--bs-cyan);
-    border-top: var(--bs-blue) 2px solid;
+    border-top: var(--bs-cyan) 2px solid;
 }
 
 #popup {

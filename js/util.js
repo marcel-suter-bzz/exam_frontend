@@ -6,13 +6,13 @@
 const user = readStorage("email");
 const role = readStorage("role");
 const statusData = {
-    "10": {"text": "pendent", "icon": "<span class='font-weight-bolder text-danger'>&#9888; </span>"},
-    "20": {"text": "offen", "icon": "<span class='font-weight-bold text-warning'>&#9888; </span>"},
-    "30": {"text": "abgegeben", "icon": "<span class='font-weight-bold text-danger'>&#9888; </span>"},
-    "40": {"text": "erhalten", "icon": "<span class='font-weight-bold text-danger'>&#9888 </span>"},
-    "50": {"text": "absolviert", "icon": "<span class='font-weight-bold text-danger'>&#9888 </span>"},
-    "80": {"text": "pnab", "icon": "<span class='font-weight-bold text-danger'>&#9888 </span>"},
-    "90": {"text": "gelöscht", "icon": "<span class='font-weight-bold text-danger'>&#10060; </span>"}
+    "10": {"text": "pendent", "icon": "<span class='text-warning'><i class='bi bi-exclamation-triangle-fill'></i>&nbsp;</span>"},
+    "20": {"text": "offen", "icon": "<span class='text-warning'><i class='bi bi-info-square-fill'></i>&nbsp;</span>"},
+    "30": {"text": "abgegeben", "icon": "<span class='text-primary'><i class='bi bi-envelope-paper-fill'></i>&nbsp;</span>"},
+    "40": {"text": "erhalten", "icon": "<span class='text-primary'><i class='bi bi-envelope-check-fill'></i>&nbsp;</span>"},
+    "50": {"text": "absolviert", "icon": "<span class='text-success'><i class='bi bi-check-circle-fill'></i>&nbsp;</span>"},
+    "80": {"text": "pnab", "icon": "<span class='text-danger'><i class='bi bi-x-octagon-fill'></i>&nbsp;</span>"},
+    "90": {"text": "gelöscht", "icon": "<span class='text-danger'><i class='bi bi-trash3-fill'></i>&nbsp;</span>"}
 }
 
 let delayTimer;
