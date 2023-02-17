@@ -9,7 +9,7 @@ readEventList(["dateSearch", "event_uuid"]);
 
 /* main listener */
 document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("statusSearch").addEventListener("change", searchExamlist);
+    //document.getElementById("statusSearch").addEventListener("change", searchExamlist);
     document.getElementById("editform").classList.add("d-none");
     if (role !== "teacher") {
         document.getElementById("studentSearch").value = user;

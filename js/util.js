@@ -195,8 +195,8 @@ function readStorage(item) {
  */
 function getExamUUID(event) {
     let targetElement = event.target;
-    if (targetElement.tagName === "IMG") {
-        targetElement = targetElement.parentNode;
+    if (targetElement.tagName === "I") {
+        targetElement = targetElement.parentNode.parentNode;
     }
     return targetElement.getAttribute("data-examuuid");
 }
