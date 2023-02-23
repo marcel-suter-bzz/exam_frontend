@@ -22,12 +22,21 @@ footer .text-center {
     border-top: var(--bs-cyan) 2px solid;
 }
 
-#messages {
-    pointer-events: none;
+#popup {
+    position: fixed;
     z-index: 99;
-    height: 90%;
-    padding: 10px;
+    pointer-events: none;
+    height: 100px;
+    top: 10px;
+    width: 100%;
+}
+#messages {
+    position: fixed;
+    pointer-events: none;
+    min-height: 20px;
     width: 350px;
+    right: 50px;
+    padding: 10px;
 }
 
 .nav-item, .navbar-brand {
@@ -45,4 +54,8 @@ footer .text-center {
     top: 0;
     background: white;
     inset-block-start: 0;
+}
+
+#student\.fullname {
+    position: absolute;
 }

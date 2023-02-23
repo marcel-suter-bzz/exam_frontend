@@ -31,7 +31,6 @@ function selectAccount() {
     const currentAccounts = myMSALObj.getAllAccounts();
 
     if (currentAccounts.length === 0) {
-        return;
     } else if (currentAccounts.length > 1) {
         // Add your account choosing logic here
         console.warn("Multiple accounts detected.");

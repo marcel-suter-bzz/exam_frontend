@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
   <meta charset="UTF-8">
   <meta name="author" content="Marcel Suter">
@@ -32,9 +32,6 @@
       <li class="nav-item">
         <a class="nav-link active" aria-current="page" href="./eventExams.html">Aufsicht</a>
       </li>
-      <li class="nav-item">
-        <span id="messages" class="alert" role="alert"></span>
-      </li>
     </ul>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -51,21 +48,22 @@
         </li>
       </ul>
     </div>
-
   </div>
 </nav>
+<div id="popup">
+  <div id="messages" class="alert" role="alert"></div>
+</div>
 <main class="container-xxl">
   <div id="list" class="col-12">
     <form id="filterForm">
       <table id="examlist" class="table table-striped">
         <thead class="table-info">
         <tr>
-          <th scope="col" colspan="3">
+          <th scope="col" colspan="5">
             <select id="dateSearch" data-edit="all" class="form-select">
               <option value="">Datum auswählen ...</option>
             </select>
           </th>
-          <th  colspan="2">&nbsp;</th>
           <th scope="col">
             Aufsicht
           </th>

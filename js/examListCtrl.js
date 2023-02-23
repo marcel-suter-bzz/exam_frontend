@@ -19,9 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
         document.getElementById("teacherSearch").value = user;
         document.getElementById("filterForm").addEventListener("submit", searchExamlist);
-        /*document.getElementById("studentSearch").addEventListener("keyup", searchExamlist);
-        document.getElementById("teacherSearch").addEventListener("keyup", searchExamlist);
-        document.getElementById("dateSearch").addEventListener("change", searchExamlist);*/
 
         document.getElementById("examadd").hidden = false;
         lockForm("editform", false);
@@ -29,9 +26,9 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("editform").addEventListener("submit", submitExam);
         document.getElementById("editform").addEventListener("reset", resetForm);
         document.getElementById("student.fullname").addEventListener("keyup", searchPeople);
-        document.getElementById("student.fullname").addEventListener("change", setPerson);
+        document.getElementById("student.list").addEventListener("change", setPerson);
         document.getElementById("teacher.fullname").addEventListener("keyup", searchPeople);
-        document.getElementById("teacher.fullname").addEventListener("change", setPerson);
+        document.getElementById("teacher.list").addEventListener("change", setPerson);
 
         document.getElementById("examadd").addEventListener("click", function () {
             const editForm = document.getElementById("editform");
@@ -39,7 +36,6 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("exam_uuid").value = create_UUID();
             editForm.classList.remove("d-none");
             document.getElementById("list").classList.add("d-none");
-            //searchExamlist();
         });
     }
 
@@ -80,15 +76,18 @@ function setPeopleList(data, fieldname) {
     let parts = fieldname.split(".");
     let datalist = document.getElementById(parts[0] + ".list");
     datalist.innerHTML = "";
+    count = 0;
     data.forEach(person => {
         let option = document.createElement("option");
-        option.value = person.fullname;
+        option.value = person.email;
+        option.innerHTML = person.fullname;
         if (fieldname === "student.fullname") {
-            option.value += " (" + person.department + ")";
+            option.innerHTML += " (" + person.department + ")";
         }
-        option.setAttribute("data-email", person.email);
         datalist.appendChild(option);
+        count++;
     });
+    datalist.setAttribute("size", Math.min(count, 10));
     document.getElementById(fieldname).focus();
 }
 
@@ -98,17 +97,12 @@ function setPeopleList(data, fieldname) {
  */
 function setPerson(event) {
     let fieldname = event.target.id;
+    let sourceField = document.getElementById(fieldname);
     let parts = fieldname.split(".");
-    let datalist = document.getElementById(parts[0] + ".list");
-    let fullname = document.getElementById(fieldname).value;
-
-    for (let i = 0; i < datalist.options.length; i++) {
-        let option = datalist.options[i];
-        if (option.value === fullname) {
-            document.getElementById(parts[0]).value = option.getAttribute("data-email");
-        }
-    }
-
+    document.getElementById(parts[0]).value=sourceField.value;
+    sourceField.setAttribute("size", 0);
+    document.getElementById(parts[0] + ".fullname").value = sourceField.options[sourceField.selectedIndex].text;
+    document.getElementById(parts[0]).focus();
 }
 
 /**
