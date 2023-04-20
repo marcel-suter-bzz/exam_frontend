@@ -1,2 +1,2 @@
 # exam_frontend
-Frontend part of the application to administrate students who missed an examination.
+This repository was retired. Future development will be under https://github.com/ghwalin/exam_frontend.git
